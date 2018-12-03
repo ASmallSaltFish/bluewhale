@@ -29,7 +29,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-
         <!-- logback日志 -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -116,13 +115,13 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
+        <!-- spring热部署 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
 
-        <!-- spring热部署 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>springloaded</artifactId>

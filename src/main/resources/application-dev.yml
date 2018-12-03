@@ -34,8 +34,7 @@ spring:
 #数据库连接
 spring:
   datasource:
-    #url: jdbc:mysql://localhost:3306/bw
-    url: jdbc:mysql://119.3.78.155:3306/blueWhale
+    url: jdbc:mysql://localhost:3306/bw
     username: root
     password: 12345678
     driver-class-name: com.mysql.jdbc.Driver

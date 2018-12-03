@@ -15,34 +15,8 @@
     <![endif]-->
 </head>
 <body>
-<div class="header">
-    <div class="menu-btn">
-        <div class="menu"></div>
-    </div>
-    <h1 class="logo">
-        <a href="index.html">
-            <span>MYBLOG</span>
-            <img src="${ctx}/img/logo.png">
-        </a>
-    </h1>
-    <div class="nav">
-        <a href="${ctx}/index">文章</a>
-        <a href="${ctx}/whisper">微语</a>
-        <a href="${ctx}/leacots">留言</a>
-        <a href="${ctx}/album">相册</a>
-        <a href="${ctx}/about" class="active">关于</a>
-    </div>
-    <ul class="layui-nav header-down-nav">
-        <li class="layui-nav-item"><a href="${ctx}/index">文章</a></li>
-        <li class="layui-nav-item"><a href="${ctx}/whisper">微语</a></li>
-        <li class="layui-nav-item"><a href="${ctx}/leacots">留言</a></li>
-        <li class="layui-nav-item"><a href="${ctx}/album">相册</a></li>
-        <li class="layui-nav-item"><a href="${ctx}/about" class="active">关于</a></li>
-    </ul>
-    <p class="welcome-text">
-        欢迎来到<span class="name">小明</span>的博客~
-    </p>
-</div>
+
+<#include "common/header.ftl"/>
 
 
 <div class="content whisper-content leacots-content">
@@ -173,22 +147,12 @@
         </div>
     </div>
 </script>
-<div class="footer-wrap">
-    <div class="footer w1000">
-        <div class="qrcode">
-            <img src="${ctx}/img/erweima.jpg">
-        </div>
-        <div class="practice-mode">
-            <img src="${ctx}/img/down_img.jpg">
-            <div class="text">
-                <h4 class="title">我的联系方式</h4>
-                <p>微信<span class="WeChat">1234567890</span></p>
-                <p>手机<span class="iphone">1234567890</span></p>
-                <p>邮箱<span class="email">1234567890@qq.com</span></p>
-            </div>
-        </div>
-    </div>
-</div>
+
+<#include "common/footer.ftl"/>
+
+</body>
+
+
 <script type="text/javascript" src="${ctx}/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
@@ -203,5 +167,4 @@
         menu.submit()
     })
 </script>
-</body>
 </html>
