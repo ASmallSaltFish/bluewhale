@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -20,7 +20,7 @@
 
 <div class="album-content w1000" id="layer-photos-demo" class="layer-photos-demo">
     <div class="img-info">
-        <img src="${ctx}/img/xc_img1.jpg" alt="">
+        <img src="${ctx}/static/img/xc_img1.jpg" alt="">
         <div class="title">
             <p class="data">今日上传<span>2018/10/10</span></p>
             <p class="text">观赏最美的土耳其的日</p>
@@ -31,7 +31,7 @@
             <div class="layui-row layui-col-space30 space">
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img3.jpg">
+                        <img src="${ctx}/static/img/xc_img3.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img4.jpg">
+                        <img src="${ctx}/static/img/xc_img4.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img5.jpg">
+                        <img src="${ctx}/static/img/xc_img5.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img3.jpg">
+                        <img src="${ctx}/static/img/xc_img3.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img4.jpg">
+                        <img src="${ctx}/static/img/xc_img4.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img5.jpg">
+                        <img src="${ctx}/static/img/xc_img5.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img3.jpg">
+                        <img src="${ctx}/static/img/xc_img3.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img4.jpg">
+                        <img src="${ctx}/static/img/xc_img4.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img5.jpg">
+                        <img src="${ctx}/static/img/xc_img5.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img3.jpg">
+                        <img src="${ctx}/static/img/xc_img3.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img4.jpg">
+                        <img src="${ctx}/static/img/xc_img4.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -141,7 +141,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img5.jpg">
+                        <img src="${ctx}/static/img/xc_img5.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img3.jpg">
+                        <img src="${ctx}/static/img/xc_img3.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
                     <div class="item">
-                        <img src="${ctx}/img/xc_img4.jpg">
+                        <img src="${ctx}/static/img/xc_img4.jpg">
                         <div class="cont-text">
                             <div class="data">2018/08/08</div>
                             <p class="address"><i class="layui-icon layui-icon-location"></i><span>江西九江</span></p>
@@ -178,10 +178,10 @@
 <#include "common/footer.ftl"/>
 </body>
 
-<script type="text/javascript" src="${ctx}/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
-        base: '${ctx}/js/util/'
+        base: '${ctx}/static/js/util/'
     }).use(['element', 'laypage', 'form', 'layer', 'menu'], function () {
         element = layui.element, laypage = layui.laypage, form = layui.form, layer = layui.layer, menu = layui.menu;
         laypage.render({

@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -25,7 +25,7 @@
             <div class="item-box">
                 <div class="review-version">
                     <div class="form-box">
-                        <img class="banner-img" src="${ctx}/img/liuyan.jpg">
+                        <img class="banner-img" src="${ctx}/static/img/liuyan.jpg">
                         <div class="form">
                             <form class="layui-form" action="">
                                 <div class="layui-form-item layui-form-text">
@@ -47,7 +47,7 @@
                     <div class="list-cont">
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -77,7 +77,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -117,7 +117,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -138,7 +138,7 @@
             {{# if(d.avatar){ }}
             <img src="{{d.avatar}}" alt="">
             {{# } else { }}
-            <img src="${ctx}/img/header.png" alt="">
+            <img src="${ctx}/static/img/header.png" alt="">
             {{# } }}
         </div>
         <div class="text">
@@ -153,10 +153,10 @@
 </body>
 
 
-<script type="text/javascript" src="${ctx}/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
-        base: '${ctx}/js/util/'
+        base: '${ctx}/static/js/util/'
     }).use(['element', 'laypage', 'form', 'menu'], function () {
         element = layui.element, laypage = layui.laypage, form = layui.form, menu = layui.menu;
         laypage.render({

@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -24,7 +24,7 @@
                 <h3>我的介绍</h3>
             </div>
             <div class="cont">
-                <img src="${ctx}/img/xc_img1.jpg">
+                <img src="${ctx}/static/img/xc_img1.jpg">
                 <div class="per-info">
                     <p>
                         <span class="name">小明</span><br/>
@@ -43,25 +43,25 @@
                 <div class="layui-row">
                     <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
                         <div class="cont-box">
-                            <img src="${ctx}/img/gr_img2.jpg">
+                            <img src="${ctx}/static/img/gr_img2.jpg">
                             <p>80%</p>
                         </div>
                     </div>
                     <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
                         <div class="cont-box">
-                            <img src="${ctx}/img/gr_img3.jpg">
+                            <img src="${ctx}/static/img/gr_img3.jpg">
                             <p>80%</p>
                         </div>
                     </div>
                     <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
                         <div class="cont-box">
-                            <img src="${ctx}/img/gr_img4.jpg">
+                            <img src="${ctx}/static/img/gr_img4.jpg">
                             <p>80%</p>
                         </div>
                     </div>
                     <div class="layui-col-xs6 layui-col-sm3 layui-col-md3">
                         <div class="cont-box">
-                            <img src="${ctx}/img/gr_img5.jpg">
+                            <img src="${ctx}/static/img/gr_img5.jpg">
                             <p>80%</p>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                 <h3>联系方式</h3>
             </div>
             <div class="cont">
-                <img src="${ctx}/img/erweima.jpg">
+                <img src="${ctx}/static/img/erweima.jpg">
                 <div class="text">
                     <p class="WeChat">微信：<span>1234567890</span></p>
                     <p class="qq">qq：<span>123456789</span></p>
@@ -87,10 +87,10 @@
 <#include "common/footer.ftl"/>
 </body>
 
-<script type="text/javascript" src="${ctx}/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
-        base: '${ctx}/js/util/'
+        base: '${ctx}/static/js/util/'
     }).use(['element', 'laypage', 'form', 'layer', 'menu'], function () {
         element = layui.element, laypage = layui.laypage, form = layui.form, layer = layui.layer, menu = layui.menu;
         menu.init();

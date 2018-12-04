@@ -3,8 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>注册</title>
-    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="./static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/main.css">
 
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
@@ -12,8 +12,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <script src="js/pace.mini.js"></script>
-    <link rel="stylesheet" type="text/css" href="themes/blue/pace-theme-minimal.css">
+    <script src="./static/js/pace.mini.js"></script>
+    <link rel="stylesheet" type="text/css" href="./static/themes/blue/pace-theme-minimal.css">
 </head>
 
 <body>
@@ -74,7 +74,7 @@
 <#include "common/footer.ftl"/>
 </body>
 
-<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="./static/layui/layui.js"></script>
 <script>
     //加载弹出层组件
     layui.use(['layer', 'form', 'element'], function () {

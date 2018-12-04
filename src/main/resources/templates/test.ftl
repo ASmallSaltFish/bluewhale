@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8" />
     <title>编辑和在线预览markdown</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/editormd.css" />
+    <link rel="stylesheet" href="./static/css/style.css" />
+    <link rel="stylesheet" href="./static/css/editormd.css" />
     <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
 </head>
 
@@ -36,15 +36,15 @@ var testEditor = editormd("test-editormd", {
 </div>
 
 </div>
-<script src="./js/jquery.min.js"></script>
-<script src="./js/editormd.js"></script>
+<script src="./static/js/jquery.min.js"></script>
+<script src="./static/js/editormd.js"></script>
 <script type="text/javascript">
     var testEditor;
     $(function () {
         testEditor = editormd("test-editormd", {
             width: "90%",
             autoHeight: true,
-            path: "./lib/",
+            path: "./static/lib/",
             htmlDecode: "style,script,iframe",
             tex: true,
             emoji: true,
@@ -54,7 +54,7 @@ var testEditor = editormd("test-editormd", {
         });
 
         $("#append-btn").click(function () {
-            $.get("./test.md", function (md) {
+            $.get("./static/test.md", function (md) {
                 testEditor.appendMarkdown(md);
             });
         });

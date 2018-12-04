@@ -8,17 +8,17 @@
 
     <title>登录</title>
     <meta name="keywords" content="HTML5,美观,简洁大气,响应式,第三方登录,网页模板">
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./fonts/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="./fonts/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/util.css">
-    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/fonts/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/login.css">
 </head>
 
 <body>
 
 <div class="limiter">
-    <div class="container-login100" style="background-image: url(&#39;images/bg-01.jpg&#39;);">
+    <div class="container-login100" style="background-image: url(&#39;./static/images/bg-01.jpg&#39;);">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
             <form class="login100-form validate-form">
                 <span class="login100-form-title p-b-49">登录</span>
@@ -72,8 +72,8 @@
     </div>
 </div>
 
-<script src="./js/jquery-3.2.1.min.js"></script>
-<script src="./js/main.js"></script>
+<script src="./static/js/jquery-3.2.1.min.js"></script>
+<script src="./static/js/main.js"></script>
 
 </body>
 </html>

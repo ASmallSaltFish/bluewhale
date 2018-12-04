@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -31,7 +31,7 @@
                             </div>
                             <p>
                                 爷每天5点起床，去鸡行里选鸡，选的是大小均匀的老母鸡，送到家里从杀鸡放血开始，鸡血要留着，倒在有盐水的碗里，烧好开水拔了毛连鸡嘴巴鼻子里的粘液都要挤出来。鸡洗干净六只鸡放到一个锅里炖，要炖一个上午，要注意火候鸡皮不能裂。</p>
-                            <img src="${ctx}/img/wz_img1.jpg">
+                            <img src="${ctx}/static/img/wz_img1.jpg">
                             <p>
                                 炖好的鸡挂在架子上晾干，再一片片剁开，每只鸡剁的块数都是一样，然后把鸡肉放到提前调好的水中腌两个小时，水里面的调料也是爷爷自己去市场买来磨成粉的。锅里还有剩的鸡汤，用鸡汤煮好面叶上面漂着一层绿油油的葱花。</p>
                             <p>
@@ -65,7 +65,7 @@
 
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="cont">
                             <div class="img">
-                                <img src="${ctx}/img/header.png" alt="">
+                                <img src="${ctx}/static/img/header.png" alt="">
                             </div>
                             <div class="text">
                                 <p class="tit"><span class="name">吳亦凡</span><span class="data">2018/06/06</span></p>
@@ -126,7 +126,7 @@
             {{# if(d.avatar){ }}
             <img src="{{d.avatar}}" alt="">
             {{# } else { }}
-            <img src="${ctx}/img/header.png" alt="">
+            <img src="${ctx}/static/img/header.png" alt="">
             {{# } }}
         </div>
         <div class="text">
@@ -140,10 +140,10 @@
 </body>
 
 
-<script type="text/javascript" src="${ctx}/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
-        base: '${ctx}/js/util/'
+        base: '${ctx}/static/js/util/'
     }).use(['element', 'laypage', 'form', 'menu'], function () {
         element = layui.element, laypage = layui.laypage, form = layui.form, menu = layui.menu;
         laypage.render({

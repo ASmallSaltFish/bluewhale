@@ -6,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>MyBlog</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
 
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
@@ -15,8 +15,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <script src="${ctx}/js/pace.mini.js"></script>
-    <link rel="stylesheet" type="text/css" href="${ctx}/themes/blue/pace-theme-minimal.css">
+    <script src="${ctx}/static/js/pace.mini.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/themes/blue/pace-theme-minimal.css">
 </head>
 
 <body>
@@ -25,11 +25,11 @@
 <div class="banner">
     <div class="layui-carousel" id="myCarousel">
         <div carousel-item>
-            <div><img src="${ctx}/img/bannel/bannel_1.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/img/bannel/bannel_2.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/img/bannel/bannel_3.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/img/bannel/bannel_4.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/img/bannel/bannel_5.jpg" width="100%" height="600px"></div>
+            <div><img src="${ctx}/static/img/bannel/bannel_1.jpg" width="100%" height="600px"></div>
+            <div><img src="${ctx}/static/img/bannel/bannel_2.jpg" width="100%" height="600px"></div>
+            <div><img src="${ctx}/static/img/bannel/bannel_3.jpg" width="100%" height="600px"></div>
+            <div><img src="${ctx}/static/img/bannel/bannel_4.jpg" width="100%" height="600px"></div>
+            <div><img src="${ctx}/static/img/bannel/bannel_5.jpg" width="100%" height="600px"></div>
         </div>
     </div>
 </div>
@@ -49,7 +49,7 @@
                 <div class="layui-fluid">
                     <div class="layui-row">
                         <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
-                            <div class="img"><img src="${ctx}/img/sy_img1.jpg" alt=""></div>
+                            <div class="img"><img src="${ctx}/static/img/sy_img1.jpg" alt=""></div>
                         </div>
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
                             <div class="item-cont">
@@ -69,7 +69,7 @@
                 <div class="layui-fluid">
                     <div class="layui-row">
                         <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
-                            <div class="img"><img src="${ctx}/img/sy_img2.jpg" alt=""></div>
+                            <div class="img"><img src="${ctx}/static/img/sy_img2.jpg" alt=""></div>
                         </div>
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
                             <div class="item-cont">
@@ -89,7 +89,7 @@
                 <div class="layui-fluid">
                     <div class="layui-row">
                         <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
-                            <div class="img"><img src="${ctx}/img/sy_img3.jpg" alt=""></div>
+                            <div class="img"><img src="${ctx}/static/img/sy_img3.jpg" alt=""></div>
                         </div>
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
                             <div class="item-cont">
@@ -109,7 +109,7 @@
                 <div class="layui-fluid">
                     <div class="layui-row">
                         <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
-                            <div class="img"><img src="${ctx}/img/sy_img4.jpg" alt=""></div>
+                            <div class="img"><img src="${ctx}/static/img/sy_img4.jpg" alt=""></div>
                         </div>
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
                             <div class="item-cont">
@@ -129,7 +129,7 @@
                 <div class="layui-fluid">
                     <div class="layui-row">
                         <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
-                            <div class="img"><img src="${ctx}/img/sy_img5.jpg" alt=""></div>
+                            <div class="img"><img src="${ctx}/static/img/sy_img5.jpg" alt=""></div>
                         </div>
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
                             <div class="item-cont">
@@ -153,11 +153,11 @@
 <#include "common/footer.ftl"/>
 </body>
 
-<script type="text/javascript" src="${ctx}/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 
 <script type="text/javascript">
     layui.config({
-        base: '${ctx}/js/util/'
+        base: '${ctx}/static/js/util/'
     }).use(['element', 'laypage', 'jquery', 'menu', 'carousel'], function () {
         var element = layui.element;
         var laypage = layui.laypage;
