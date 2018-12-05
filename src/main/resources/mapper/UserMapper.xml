@@ -3,7 +3,20 @@
 <mapper namespace="com.qs.bluewhale.mapper.UserMapper">
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id,user_name,nick_name,
+        user_id,
+        user_name,
+        nick_name,
+        email,
+        phone,
+        password,
+        position,
+        sex,
+        signature,
+        user_status,
+        create_time,
+        create_by,
+        last_modify_time,
+        last_modify_by
     </sql>
 
 </mapper>

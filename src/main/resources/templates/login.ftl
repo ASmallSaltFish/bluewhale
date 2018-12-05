@@ -20,18 +20,18 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url(&#39;./static/images/bg-01.jpg&#39;);">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-            <form class="login100-form validate-form">
+            <form class="login100-form validate-form" id="loginForm">
                 <span class="login100-form-title p-b-49">登录</span>
 
                 <div class="wrap-input100 validate-input m-b-23" data-validate="请输入用户名">
                     <span class="label-input100">用户名</span>
-                    <input class="input100" type="text" name="username" placeholder="请输入用户名" autocomplete="off">
+                    <input class="input100" type="text" name="userName" placeholder="请输入用户名" autocomplete="off">
                     <span class="focus-input100" data-symbol=""></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="请输入密码">
                     <span class="label-input100">密码</span>
-                    <input class="input100" type="password" name="pass" placeholder="请输入密码">
+                    <input class="input100" type="password" name="password" placeholder="请输入密码">
                     <span class="focus-input100" data-symbol=""></span>
                 </div>
 
@@ -42,7 +42,7 @@
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <button class="login100-form-btn">登 录</button>
+                        <button class="login100-form-btn" id="btnLogin">登 录</button>
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="flex-col-c p-t-25">
-                    <a href="javascript:" class="txt2">立即注册</a>
+                    <a href="register" class="txt2">立即注册</a>
                 </div>
             </form>
         </div>
@@ -74,6 +74,41 @@
 
 <script src="./static/js/jquery-3.2.1.min.js"></script>
 <script src="./static/js/main.js"></script>
-
+<script type="text/javascript" src="./static/layui/layui.js"></script>
 </body>
+
+<script type="text/javascript">
+    layui.config({
+        base: './static/js/util/'
+    }).use(['jquery', 'layer'], function () {
+        var layer = layui.layer;
+        var $ = layui.$;
+
+        $("#btnLogin").click(function (e) {
+            e.preventDefault();
+            var userName = $("input[name='userName']").val();
+            var password = $("input[name='password']").val();
+            var isRememberMe = $("input[name='rememberMe']").prop("checked");
+            if(!userName || !password ){
+                alert("用户名密码不能为空！");
+                return false;
+            }
+
+            var loginParam = {
+                "userName": userName,
+                "password": password,
+                "rememberMe": isRememberMe
+            };
+
+            $.post("ajaxLogin", loginParam, function (data) {
+                if (data && data.status === "SUCCESS") {
+                    window.location.href = 'index';
+                } else {
+                    alert(data.msg || "登录失败！");
+                    window.location.href = 'login';
+                }
+            });
+        });
+    })
+</script>
 </html>

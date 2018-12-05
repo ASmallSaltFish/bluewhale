@@ -24,7 +24,13 @@
         <li class="layui-nav-item"><a href="${ctx}/about" class="active">关于</a></li>
     </ul>
 
-    <p class="welcome-text">
-        <a href="${ctx}/login">登录</a> | <a href="${ctx}/register">注册</a>
-    </p>
+    <#if loginUser??>
+        <p class="welcome-text">
+            欢迎您， <a href="${ctx}/userInfo">${(loginUser.userName)!}</a>
+        </p>
+    <#else>
+        <p class="welcome-text">
+            <a href="${ctx}/login">登录</a> | <a href="${ctx}/register">注册</a>
+        </p>
+    </#if>
 </div>

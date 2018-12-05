@@ -16,6 +16,7 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         System.out.println("插入实体信息是，create_time字段，自动设置为当前时间");
         setFieldValByName("create_time", new Date(), metaObject);
+        setFieldValByName("last_modify_time", new Date(), metaObject);
     }
 
     @Override

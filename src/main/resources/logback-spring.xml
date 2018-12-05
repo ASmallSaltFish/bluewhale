@@ -19,7 +19,7 @@
         </appender>
 
         <!--默认所有的包以info-->
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="STDOUT"/>
         </root>
 
