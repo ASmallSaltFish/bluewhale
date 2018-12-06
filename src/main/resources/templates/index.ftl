@@ -14,9 +14,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="${ctx}/static/js/pace.mini.js"></script>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/themes/blue/pace-theme-minimal.css">
 </head>
 
 <body>

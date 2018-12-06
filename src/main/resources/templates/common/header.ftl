@@ -1,4 +1,6 @@
 <#assign ctx=request.contextPath/>
+<script src="${ctx}/static/js/pace.mini.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/static/themes/blue/pace-theme-minimal.css">
 <div class="header">
     <div class="menu-btn">
         <div class="menu"></div>
