@@ -37,4 +37,10 @@
         where u.user_name = #{userName};
     </select>
 
+    <!--插入sql语句-->
+    <insert id="saveUserRole" parameterType="com.qs.bluewhale.entity.UserRole">
+        insert into t_bw_user_role(user_role_id,user_id,role_id)
+        values (#{userRoleId},#{userId},#{roleId})
+    </insert>
+
 </mapper>

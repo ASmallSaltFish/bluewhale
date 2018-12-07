@@ -47,4 +47,9 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     public Set<String> getRoleNames(String userName) {
         return userRoleMapper.getRoleNamesByUserName(userName);
     }
+
+    @Override
+    public void saveUserRole(UserRole userRole) {
+        userRoleMapper.saveUserRole(userRole);
+    }
 }

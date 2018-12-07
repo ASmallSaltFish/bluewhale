@@ -8,4 +8,5 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<Role> listRoles(List<String> roleIds);
+    Role findRoleByName(String roleName);
 }

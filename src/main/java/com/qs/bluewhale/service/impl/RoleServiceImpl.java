@@ -18,4 +18,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         queryWrapper.in("role_id", roleIds);
         return list(queryWrapper);
     }
+
+    @Override
+    public Role findRoleByName(String roleName) {
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_name", roleName);
+        return getOne(queryWrapper);
+    }
 }

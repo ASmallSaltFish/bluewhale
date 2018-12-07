@@ -1,6 +1,11 @@
 package com.qs.bluewhale.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.qs.bluewhale.entity.Role;
 import com.qs.bluewhale.entity.User;
+import com.qs.bluewhale.entity.UserRole;
+import com.qs.bluewhale.service.RoleService;
+import com.qs.bluewhale.service.UserRoleService;
 import com.qs.bluewhale.service.UserService;
 import com.qs.bluewhale.utils.JsonResult;
 import com.qs.bluewhale.utils.JsonStatus;
@@ -9,21 +14,26 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "/")
 public class IndexController {
 
-    @Resource
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private UserRoleService userRoleService;
 
     @GetMapping(value = {"/", "/index"})
     public String index() {
@@ -115,9 +125,26 @@ public class IndexController {
         return "register";
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/ajaxRegister")
     @ResponseBody
-    public String ajaxRegister() {
-        return "ajaxRegister";
+    public JsonResult ajaxRegister(User user, HttpServletRequest request) {
+        JsonResult jsonResult = new JsonResult();
+        User us=userService.findUserByUserName(user.getUserName());
+        String roleName=request.getParameter("role");
+        Role role=roleService.findRoleByName(roleName);
+        if (us!=null){
+            jsonResult.setMsg("用户名已被使用");
+            return jsonResult;
+        }
+        user.setUserId(IdWorker.getIdStr());
+        userService.saveUser(user);
+        UserRole userRole=new UserRole();
+        userRole.setUserRoleId(IdWorker.getIdStr());
+        userRole.setUserId(user.getUserId());
+        userRole.setRoleId(role.getRoleId());
+        userRoleService.saveUserRole(userRole);
+        jsonResult.setStatus(JsonStatus.SUCCESS);
+        jsonResult.setMsg("注册成功!");
+        return jsonResult;
     }
 }
