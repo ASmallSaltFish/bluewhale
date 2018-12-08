@@ -13,6 +13,8 @@ public class Role extends SuperEntity<Role> {
     @TableId(type = IdType.ID_WORKER_STR)
     private String roleId;
 
+    private String roleCode;
+
     private String roleName;
 
     private String roleDesc;

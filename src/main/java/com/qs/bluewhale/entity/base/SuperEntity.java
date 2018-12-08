@@ -23,8 +23,10 @@ public class SuperEntity<T extends Model> extends Model<T> {
     @TableField(value = "last_modify_time", fill = FieldFill.INSERT)
     private Date lastModifyTime;
 
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
     private String createBy;
 
+    @TableField(value = "last_modify_by", fill = FieldFill.INSERT)
     private String lastModifyBy;
 
     @Override

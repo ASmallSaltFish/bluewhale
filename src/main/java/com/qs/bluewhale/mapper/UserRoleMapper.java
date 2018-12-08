@@ -9,7 +9,4 @@ import java.util.Set;
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     List<String> getRoleIdsByUserId(String userId);
-
-    Set<String> getRoleNamesByUserName(String userName);
-    void saveUserRole(UserRole userRole);
 }

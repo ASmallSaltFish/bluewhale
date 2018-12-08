@@ -19,10 +19,4 @@
         last_modify_by
     </sql>
 
-    <!--插入sql语句-->
-    <insert id="saveUser" parameterType="com.qs.bluewhale.entity.User">
-        insert into t_bw_user(user_id,user_name,password,sex,signature)
-        values (#{userId},#{userName},#{password},#{sex},#{signature})
-    </insert>
-
 </mapper>

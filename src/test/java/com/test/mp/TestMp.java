@@ -51,7 +51,7 @@ public class TestMp extends BaseTest {
     @Test
     public void testSaveRole() {
         Role role = new Role();
-        role.setRoleName("管理员");
+        role.setRoleName("用户");
         role.setRoleDesc("测试");
         roleService.save(role);
     }
@@ -74,12 +74,5 @@ public class TestMp extends BaseTest {
     public void testFindRolesByUserId() {
         Set<Role> roleSet = userRoleService.findRolesByUserId("1069915463289114625");
         System.out.println("--->>>roleSet=" + roleSet);
-    }
-
-
-    @Test
-    public void testGetRoleNamesByUserName() {
-        Set<String> roleNames = userRoleMapper.getRoleNamesByUserName("admin");
-        System.out.println("--->>>roleNames=" + roleNames);
     }
 }

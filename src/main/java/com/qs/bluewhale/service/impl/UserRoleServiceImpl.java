@@ -12,6 +12,7 @@ import org.apache.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -41,15 +42,5 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
         }
 
         return new HashSet<>(roleService.listRoles(roleIds));
-    }
-
-    @Override
-    public Set<String> getRoleNames(String userName) {
-        return userRoleMapper.getRoleNamesByUserName(userName);
-    }
-
-    @Override
-    public void saveUserRole(UserRole userRole) {
-        userRoleMapper.saveUserRole(userRole);
     }
 }

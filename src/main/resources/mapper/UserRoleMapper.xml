@@ -23,24 +23,10 @@
         last_modify_by
     </sql>
 
+    <!-- 根据userId获取用户角色id集合 -->
     <select id="getRoleIdsByUserId" parameterType="String" resultType="String">
         select role_id
         from t_bw_user_role
         where user_id = #{userId}
     </select>
-
-    <select id="getRoleNamesByUserName" parameterType="String" resultType="String">
-        select r.role_name
-        from t_bw_role r
-                 inner join t_bw_user_role ur on ur.role_id = r.role_id
-                 inner join t_bw_user u on u.user_id = ur.user_id
-        where u.user_name = #{userName};
-    </select>
-
-    <!--插入sql语句-->
-    <insert id="saveUserRole" parameterType="com.qs.bluewhale.entity.UserRole">
-        insert into t_bw_user_role(user_role_id,user_id,role_id)
-        values (#{userRoleId},#{userId},#{roleId})
-    </insert>
-
 </mapper>

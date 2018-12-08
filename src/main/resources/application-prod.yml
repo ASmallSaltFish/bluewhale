@@ -11,14 +11,32 @@ spring:
       enabled: true
 
 ---
-
-#freemarker配置
+#静态资源路径设置
 spring:
-  #freemarker配置
+  mvc:
+    static-path-pattern: /**
+  resources:
+    #这里修改静态资源访问路径为classpath:/，原来为classpath:/static/
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/, classpath:/templates/
+
+---
+#freemarker模版配置
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
   freemarker:
-    #是否开启模板缓存，默认为true，开发会设置为false
-    cache: true
-    #把HttpServletRequest的属性存放到request这个变量里面，页面上可以通过request.contextPath获取应用上下文信息
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates
     request-context-attribute: request
     settings:
       template_update_delay: 0
@@ -52,7 +70,7 @@ mybatis-plus:
       #capital-mode: true
       db-type: mysql
     #刷新mapper 调试神器
-    refresh: true
+#    refresh: true
   # 原生配置
   configuration:
     map-underscore-to-camel-case: true
@@ -67,12 +85,4 @@ pagehelper:
 
 logging:
   level:
-    com.qs.bluewhale.mapper: debug
-
-
-#自定义键值对
-shiro:
-  password:
-    salt: abc
-    hashIterations: 2
-    algorithmName: md5
+    com.qs.bluewhale.mapper: info

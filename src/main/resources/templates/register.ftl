@@ -34,7 +34,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">用户名</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="title" required lay-verify="required" placeholder="请输入用户名"
+                                    <input type="text" name="userName" required lay-verify="required"
+                                           placeholder="请输入用户名"
                                            autocomplete="off" class="layui-input">
                                 </div>
                             </div>
@@ -54,20 +55,21 @@
                                     <input type="radio" name="sex" value="3" title="保密">
                                 </div>
                             </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">角色</label>
-                                <div class="layui-input-block">
-                                    <select name="userRole" id="userRole">
-                                        <option value="" selected="selected">==请选择==</option>
-                                        <option value="管理员">管理员</option>
-                                        <option value="用户">用户</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <#--<div class="layui-form-item">-->
+                            <#--<label class="layui-form-label">角色</label>-->
+                            <#--<div class="layui-input-block">-->
+                            <#--<select name="userRole" id="userRole">-->
+                            <#--<option value="" selected="selected">==请选择==</option>-->
+                            <#--<option value="管理员">管理员</option>-->
+                            <#--<option value="用户">用户</option>-->
+                            <#--</select>-->
+                            <#--</div>-->
+                            <#--</div>-->
                             <div class="layui-form-item layui-form-text">
                                 <label class="layui-form-label">个人签名</label>
                                 <div class="layui-input-block">
-                                    <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                    <textarea name="signature" placeholder="请输入个性签名..."
+                                              class="layui-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -101,34 +103,29 @@
 
         $("#btnRegister").click(function (e) {
             e.preventDefault();
-            var userName = $("input[name='title']").val();
+            var userName = $("input[name='userName']").val();
             var password = $("input[name='password']").val();
             var sex = $("input[name='sex']:checked").val();
-            var signature = $("textarea[name='desc']").val();
-            var role = $("#userRole").find("option:selected").val();
-            alert(role);
+            var signature = $("textarea[name='signature']").val();
             if (!userName || !password) {
-                alert("用户名或密码不能为空！");
+                layer.msg("用户名或密码不能为空！", {icon: 2, time: 3000});
                 return false;
             }
-            if(role==null){
-                alert("请选择角色！");
-                return false;
-            }
+
             var regParam = {
                 "userName": userName,
                 "password": password,
                 "sex": sex,
-                "signature": signature,
-                "role": role
+                "signature": signature
             };
 
             $.post("ajaxRegister", regParam, function (data) {
                 if (data && data.status === "SUCCESS") {
-                    window.location.href = 'login';
+                    layer.msg("注册成功！", {icon: 1, time: 3000}, function () {
+                        window.location.href = 'login';
+                    });
                 } else {
-                    alert(data.msg || "注册失败！");
-                    window.location.href = 'register';
+                    layer.msg(data.msg || "注册失败！", {icon: 2, time: 3000});
                 }
             });
         });

@@ -1,10 +1,13 @@
 package com.qs.bluewhale.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.qs.bluewhale.entity.base.SuperEntity;
 import lombok.Data;
+
+import java.util.Set;
 
 /**
  * 用户实体类
@@ -37,4 +40,8 @@ public class User extends SuperEntity<User> {
 
     //用户状态 1-正常，2-被锁定，3-禁用
     private String userStatus;
+
+    //不和数据库字段映射关联，设置为忽略字段
+    @TableField(exist = false)
+    private Set<String> roleCodes;
 }

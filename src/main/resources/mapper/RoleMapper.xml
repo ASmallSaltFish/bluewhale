@@ -3,7 +3,23 @@
 <mapper namespace="com.qs.bluewhale.mapper.RoleMapper">
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        role_id,role_name,role_desc,create_time,create_by,last_modify_time,last_modify_by
+        role_id,
+        role_code,
+        role_name,
+        role_desc,
+        create_time,
+        create_by,
+        last_modify_time,
+        last_modify_by
     </sql>
 
+
+    <!-- 根据用户名获取用户具有的角色 -->
+    <select id="findRoleCodesByUserName" parameterType="String" resultType="String">
+        select r.role_code
+        from t_bw_role r
+                 inner join t_bw_user_role ur on ur.role_id = r.role_id
+                 inner join t_bw_user u on u.user_id = ur.user_id
+        where u.user_name = #{userName};
+    </select>
 </mapper>

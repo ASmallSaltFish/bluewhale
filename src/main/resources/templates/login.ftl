@@ -89,8 +89,10 @@
             var userName = $("input[name='userName']").val();
             var password = $("input[name='password']").val();
             var isRememberMe = $("input[name='rememberMe']").prop("checked");
-            if(!userName || !password ){
-                alert("用户名密码不能为空！");
+            if (!userName || !password) {
+                window.setTimeout(function () {
+                    layer.msg('用户名密码不能为空！', {icon: 2});
+                }, 2000);
                 return false;
             }
 
@@ -102,10 +104,11 @@
 
             $.post("ajaxLogin", loginParam, function (data) {
                 if (data && data.status === "SUCCESS") {
-                    window.location.href = 'index';
+                    layer.msg('登录成功！', {icon: 1}, function () {
+                        window.location.href = 'index';
+                    });
                 } else {
-                    alert(data.msg || "登录失败！");
-                    window.location.href = 'login';
+                    layer.msg(data.msg || '用户名密码不能为空！', {icon: 2, time: 3000});
                 }
             });
         });
