@@ -1,11 +1,12 @@
+<#assign ctx=request.contextPath/>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>注册</title>
-    <link rel="stylesheet" type="text/css" href="./static/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
 
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
@@ -13,8 +14,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <script src="./static/js/pace.mini.js"></script>
-    <link rel="stylesheet" type="text/css" href="./static/themes/blue/pace-theme-minimal.css">
+    <script src="${ctx}/static/js/pace.mini.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/themes/blue/pace-theme-minimal.css">
 </head>
 
 <body>
@@ -55,16 +56,6 @@
                                     <input type="radio" name="sex" value="3" title="保密">
                                 </div>
                             </div>
-                            <#--<div class="layui-form-item">-->
-                            <#--<label class="layui-form-label">角色</label>-->
-                            <#--<div class="layui-input-block">-->
-                            <#--<select name="userRole" id="userRole">-->
-                            <#--<option value="" selected="selected">==请选择==</option>-->
-                            <#--<option value="管理员">管理员</option>-->
-                            <#--<option value="用户">用户</option>-->
-                            <#--</select>-->
-                            <#--</div>-->
-                            <#--</div>-->
                             <div class="layui-form-item layui-form-text">
                                 <label class="layui-form-label">个人签名</label>
                                 <div class="layui-input-block">
@@ -90,11 +81,11 @@
 <#include "common/footer.ftl"/>
 </body>
 
-<script type="text/javascript" src="./static/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 <script>
     //加载弹出层组件
     layui.config({
-        base: './static/js/util/'
+        base: '${ctx}/static/js/util/'
     }).use(['layer', 'form', 'element'], function () {
         var layer = layui.layer;
         var form = layui.form;
@@ -122,7 +113,7 @@
             $.post("ajaxRegister", regParam, function (data) {
                 if (data && data.status === "SUCCESS") {
                     layer.msg("注册成功！", {icon: 1, time: 3000}, function () {
-                        window.location.href = 'login';
+                        window.location.href = '${ctx}/login';
                     });
                 } else {
                     layer.msg(data.msg || "注册失败！", {icon: 2, time: 3000});

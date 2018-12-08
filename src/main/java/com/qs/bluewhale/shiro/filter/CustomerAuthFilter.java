@@ -62,6 +62,7 @@ public class CustomerAuthFilter extends AuthorizationFilter {
 
         //页面展示时使用
         servletRequest.setAttribute("loginUser", loginUser);
+        servletRequest.setAttribute("ctx",servletRequest.getServletContext().getContextPath());
         return true;
     }
 }

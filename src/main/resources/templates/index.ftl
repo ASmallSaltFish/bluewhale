@@ -1,4 +1,3 @@
-<#assign ctx=request.contextPath/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +55,7 @@
                                 <h5>设计文章</h5>
                                 <p>
                                     室内设计作为一门新兴的学科，尽管还只是近数十年的事，但是人们有意识地对自己生活、生产活动的室内进行安排布置，甚至美化装饰，赋予室内环境以所祈使的气氛，却早巳从人类文明伊始的时期就已存在</p>
-                                <a href="details.html" class="go-icon"></a>
+                                <a href="${ctx}/article/example" class="go-icon"></a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +75,7 @@
                                 <h5>设计文章</h5>
                                 <p>
                                     室内设计作为一门新兴的学科，尽管还只是近数十年的事，但是人们有意识地对自己生活、生产活动的室内进行安排布置，甚至美化装饰，赋予室内环境以所祈使的气氛，却早巳从人类文明伊始的时期就已存在</p>
-                                <a href="details.html" class="go-icon"></a>
+                                <a href="${ctx}/details.html" class="go-icon"></a>
                             </div>
                         </div>
                     </div>

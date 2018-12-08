@@ -1,4 +1,3 @@
-<#assign ctx=request.contextPath/>
 <script src="${ctx}/static/js/pace.mini.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/themes/blue/pace-theme-minimal.css">
 
@@ -34,19 +33,19 @@
         <div class="layui-col-md8">
             <ul class="layui-nav">
                 <li class="layui-nav-item">
-                    <a href="index">文章</a>
+                    <a href="${ctx}/index">文章</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="whisper">微语</a>
+                    <a href="${ctx}/whisper">微语</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="leacots">留言</a>
+                    <a href="${ctx}/leacots">留言</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="album">相册</a>
+                    <a href="${ctx}/album">相册</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="about">关于</a>
+                    <a href="${ctx}/about">关于</a>
                 </li>
             </ul>
         </div>

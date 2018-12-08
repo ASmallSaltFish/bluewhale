@@ -1,4 +1,3 @@
-<#assign ctx=request.contextPath/>
 <!DOCTYPE html>
 <html lang="en">
 <head>

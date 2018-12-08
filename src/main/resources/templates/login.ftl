@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)http://yanshi.sucaihuo.com/modals/49/4919/demo/ -->
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -25,13 +24,14 @@
 
                 <div class="wrap-input100 validate-input m-b-23" data-validate="请输入用户名">
                     <span class="label-input100">用户名</span>
-                    <input class="input100" type="text" name="userName" placeholder="请输入用户名" autocomplete="off">
+                    <input class="input100" type="text" name="userName" placeholder="请输入用户名" autocomplete="off"
+                           value="admin">
                     <span class="focus-input100" data-symbol=""></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="请输入密码">
                     <span class="label-input100">密码</span>
-                    <input class="input100" type="password" name="password" placeholder="请输入密码">
+                    <input class="input100" type="password" name="password" placeholder="请输入密码" value="admin">
                     <span class="focus-input100" data-symbol=""></span>
                 </div>
 
@@ -91,7 +91,7 @@
             var isRememberMe = $("input[name='rememberMe']").prop("checked");
             if (!userName || !password) {
                 window.setTimeout(function () {
-                    layer.msg('用户名密码不能为空！', {icon: 2});
+                    layer.msg('用户名密码不能为空！', {icon: 2, time: 3000});
                 }, 2000);
                 return false;
             }
@@ -104,7 +104,7 @@
 
             $.post("ajaxLogin", loginParam, function (data) {
                 if (data && data.status === "SUCCESS") {
-                    layer.msg('登录成功！', {icon: 1}, function () {
+                    layer.msg('登录成功！', {icon: 1, time: 2000}, function () {
                         window.location.href = 'index';
                     });
                 } else {
