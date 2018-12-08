@@ -9,7 +9,9 @@ import org.apache.shiro.cache.CacheManager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-//todo 该如何限制登录次数，待完成。
+/**
+ * 限制最多只能尝试登陆5次
+ */
 public class RetryCredentialsMatcher extends HashedCredentialsMatcher {
 
     private Cache<String, AtomicInteger> passwordRetryCache;

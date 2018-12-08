@@ -3,6 +3,7 @@ package com.qs.bluewhale.shiro.realm;
 import com.qs.bluewhale.entity.User;
 import com.qs.bluewhale.entity.UserRole;
 import com.qs.bluewhale.entity.enums.UserStatusEnum;
+import com.qs.bluewhale.service.RoleService;
 import com.qs.bluewhale.service.UserRoleService;
 import com.qs.bluewhale.service.UserService;
 import com.qs.bluewhale.utils.PwdEncryptUtil;
@@ -28,7 +29,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
     private UserService userService;
 
     @Autowired
-    private UserRoleService userRoleService;
+    private RoleService roleService;
 
     /**
      * 权限校验
@@ -40,7 +41,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
         //获取当前登录的用户名
         String username = (String) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(userRoleService.getRoleNames(username));
+        //设置用户编号
+        authorizationInfo.setRoles(roleService.findRoleCodesByUserName(username));
         return authorizationInfo;
     }
 
@@ -64,7 +66,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         }
 
         //用户被禁用
-        if(UserStatusEnum.DISABLED.getCode().equals(userStatus)){
+        if (UserStatusEnum.DISABLED.getCode().equals(userStatus)) {
             throw new DisabledAccountException();
         }
 
@@ -77,15 +79,15 @@ public class ShiroDbRealm extends AuthorizingRealm {
                 this.getName());
     }
 
-    /**
-     * 设置认证加密方式（经过测试，在项目启动时会加载登录认证加密方式，这里的加密需要和修改密码时加密算法一致）
-     */
-    @Override
-    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
-        HashedCredentialsMatcher md5CredentialsMatcher = new HashedCredentialsMatcher();
-        md5CredentialsMatcher.setHashAlgorithmName(PwdEncryptUtil.hashAlgorithmName);
-        md5CredentialsMatcher.setHashIterations(PwdEncryptUtil.hashIterations);
-        super.setCredentialsMatcher(md5CredentialsMatcher);
-    }
+//    /**
+//     * 设置认证加密方式（经过测试，在项目启动时会加载登录认证加密方式，这里的加密需要和修改密码时加密算法一致）
+//     */
+//    @Override
+//    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+//        HashedCredentialsMatcher md5CredentialsMatcher = new HashedCredentialsMatcher();
+//        md5CredentialsMatcher.setHashAlgorithmName(PwdEncryptUtil.hashAlgorithmName);
+//        md5CredentialsMatcher.setHashIterations(PwdEncryptUtil.hashIterations);
+//        super.setCredentialsMatcher(md5CredentialsMatcher);
+//    }
 
 }
