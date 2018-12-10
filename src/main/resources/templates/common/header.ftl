@@ -58,7 +58,7 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="${ctx}/userInfo">个人信息</a>
+                                <a href="//about">个人信息</a>
                             </dd>
                             <dd>
                                 <a href="${ctx}/blogManager">博客管理</a>

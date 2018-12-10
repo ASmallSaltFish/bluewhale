@@ -20,7 +20,7 @@
 
 <body>
 
-<#include "common/header.ftl"/>
+<#include "../common/header.ftl"/>
 
 <div class="layui-container" style="height: 900px;">
     <div class="layui-row">
@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<#include "common/footer.ftl"/>
+<#include "../common/footer.ftl"/>
 </body>
 
 <script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>

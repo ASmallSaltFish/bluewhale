@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<#include "common/header.ftl"/>
+<#include "../common/header.ftl"/>
 
 <div class="banner">
     <div class="layui-carousel" id="myCarousel">
@@ -146,7 +146,7 @@
     </div>
 </div>
 
-<#include "common/footer.ftl"/>
+<#include "../common/footer.ftl"/>
 </body>
 
 <script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>

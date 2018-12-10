@@ -1,10 +1,14 @@
 package com.test.mp;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.qs.bluewhale.entity.Article;
 import com.qs.bluewhale.entity.Role;
 import com.qs.bluewhale.entity.User;
 import com.qs.bluewhale.entity.UserRole;
+import com.qs.bluewhale.entity.enums.ArticlePersonalFlagEnum;
+import com.qs.bluewhale.entity.enums.ArticleStatusEnum;
 import com.qs.bluewhale.mapper.UserRoleMapper;
+import com.qs.bluewhale.service.ArticleService;
 import com.qs.bluewhale.service.RoleService;
 import com.qs.bluewhale.service.UserRoleService;
 import com.qs.bluewhale.service.UserService;
@@ -12,6 +16,8 @@ import com.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
+import java.rmi.activation.Activatable;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +31,9 @@ public class TestMp extends BaseTest {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Resource
+    private ArticleService articleService;
 
 
     @Autowired
@@ -74,5 +83,17 @@ public class TestMp extends BaseTest {
     public void testFindRolesByUserId() {
         Set<Role> roleSet = userRoleService.findRolesByUserId("1069915463289114625");
         System.out.println("--->>>roleSet=" + roleSet);
+    }
+
+
+    @Test
+    public void testSaveActicle() {
+        Article article = new Article();
+        article.setAuthor("qinyupeng");
+        article.setContent("这是markdown正文");
+        article.setPreviewContent("这是markdown预览正文");
+        article.setPersonalFlag(ArticlePersonalFlagEnum.PUBLIC.getCode());
+        article.setStatus(ArticleStatusEnum.DRAFTED.getCode());
+        articleService.save(article);
     }
 }

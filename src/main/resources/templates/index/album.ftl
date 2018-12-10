@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<#include "common/header.ftl"/>
+<#include "../common/header.ftl"/>
 
 <div class="album-content w1000" id="layer-photos-demo" class="layer-photos-demo">
     <div class="img-info">
@@ -174,7 +174,7 @@
     </div>
 </div>
 
-<#include "common/footer.ftl"/>
+<#include "../common/footer.ftl"/>
 </body>
 
 <script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>

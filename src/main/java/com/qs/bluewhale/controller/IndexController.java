@@ -12,49 +12,49 @@ public class IndexController extends BaseController {
 
     @GetMapping(value = {"/", "/index"})
     public String index() {
-        return "index";
+        return "/index/index";
     }
 
     @GetMapping(value = "/about")
     public String about() {
-        return "about";
+        return "/index/about";
     }
 
     @GetMapping(value = "/album")
     public String album() {
-        return "album";
+        return "/index/album";
     }
 
     @GetMapping(value = "/details")
     public String details() {
-        return "details";
+        return "/index/details";
     }
 
     @GetMapping(value = "/leacots")
     public String leacots() {
-        return "leacots";
+        return "/index/leacots";
     }
 
     @GetMapping(value = "/whisper")
     public String whisper() {
-        return "whisper";
+        return "/index/whisper";
     }
 
     @GetMapping(value = "/test")
     public String test() {
-        return "test";
+        return "/test";
     }
 
     //用户信息
     @GetMapping(value = "/userInfo")
     public String userInfo() {
-        return "userInfo";
+        return "/userInfo";
     }
 
     //博客管理(管理员权限)
     @RequiresRoles("admin")
     @GetMapping(value = "/blogManager")
     public String blogManager() {
-        return "blogManager";
+        return "/manager/blogManager";
     }
 }

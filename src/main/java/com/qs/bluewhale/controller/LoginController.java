@@ -23,7 +23,7 @@ public class LoginController extends BaseController {
 
     @GetMapping(value = "/login")
     public String login() {
-        return "login";
+        return "/index/login";
     }
 
 

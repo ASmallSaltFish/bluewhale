@@ -33,7 +33,7 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
         String userId = ExecutionContext.getUserId();
         if (StringUtils.isNotBlank(userId) && createBy == null) {
-            metaObject.setValue("create_by", userId);
+            metaObject.setValue("createBy", userId);
         }
 
         if (StringUtils.isNotBlank(userId) && lastModifyBy == null) {
