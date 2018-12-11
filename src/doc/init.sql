@@ -1,3 +1,4 @@
+-- 角色表
 create table t_bw_role
 (
   role_id varchar(32) not null
@@ -13,6 +14,7 @@ create table t_bw_role
     unique (role_code)
 );
 
+-- 用户表
 create table t_bw_user
 (
   user_id varchar(32) not null
@@ -31,6 +33,7 @@ create table t_bw_user
   last_modify_by varchar(32) null
 );
 
+-- 用户角色表
 create table t_bw_user_role
 (
   user_role_id varchar(32) not null
@@ -42,6 +45,23 @@ create table t_bw_user_role
   create_by varchar(32) null,
   last_modify_by varchar(32) null
 );
+
+-- 文章表
+create table t_bw_article
+(
+  article_id       varchar(32),
+  title            varchar(32),
+  author           varchar(50),
+  status           varchar(1),
+  personal_flag    varchar(1),
+  content          text,
+  preview_content  text,
+  create_time      datetime,
+  last_modify_time datetime,
+  create_by        varchar(32),
+  last_modify_by   varchar(32)
+);
+
 
 INSERT INTO bw.t_bw_role (role_id, role_name, role_desc, create_time, last_modify_time, create_by, last_modify_by, role_code) VALUES ('1069918047802437634', '管理员', '测试', '2018-12-08 00:00:00', '2018-12-08 00:00:00', null, null, 'admin');
 INSERT INTO bw.t_bw_role (role_id, role_name, role_desc, create_time, last_modify_time, create_by, last_modify_by, role_code) VALUES ('1071279311002771458', '用户', '测试', '2018-12-08 00:00:00', '2018-12-08 00:00:00', null, null, 'user');
