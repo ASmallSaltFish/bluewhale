@@ -31,19 +31,19 @@
     <button class="layui-btn layui-btn-normal" data-type="export" id="btnExport">导出</button>
 
     <div class="layui-row" style="margin-top: 20px;">
-        <button class="layui-btn layui-btn-primary">新增</button>
+        <button class="layui-btn layui-btn-sm" id="btnAddArticle">新增文章</button>
     </div>
 
-    <div class="layui-tab" lay-filter="orderTab" style="margin-top: 30px;">
-        <ul class="layui-tab-title">
-            <li class="layui-this" order-status="">所有文章</li>
-            <li order-status="ARTICLE_PUBLIC">公开</li>
-            <li order-status="ARTICLE_PRIVATE">私有</li>
+    <div class="layui-tab" style="margin-top: 10px;">
+        <ul class="layui-tab-title" lay-filter="openTypeTab" >
+            <li class="layui-this" data-type="ALL">所有文章</li>
+            <li data-type="ARTICLE_PUBLIC">公开</li>
+            <li data-type="ARTICLE_PRIVATE">私有</li>
         </ul>
 
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <table class="layui-hide" id="allOrderListTb" lay-filter="article"></table>
+                <table class="layui-hide" id="allArticleListTb" lay-filter="article"></table>
             </div>
             <div class="layui-tab-item">
                 <table class="layui-hide" id="articlePublicListTb" lay-filter="article"></table>
@@ -83,8 +83,8 @@
         var table_data = [];
         //第一个实例
         table.render({
-            elem: '#allOrderListTb',
-            height: 315,
+            elem: '#allArticleListTb',
+            height: 500,
             url: '${ctx}/article/listArticles',
             page: true,
             cols: [[
@@ -99,7 +99,7 @@
                 {field: 'lastModifyBy', title: '修改人'},
                 {field: 'lastModifyTime', title: '修改时间', templet: "<div>{{layui.util.toDateString(d.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             ]],
-            id: 'allOrderListTb',
+            id: 'allArticleListTb',
             limits: [5, 10],
             where: {
                 'keyword': $("#keyword").val()
@@ -140,21 +140,10 @@
             console.log(selectedArticleIds);
         });
 
-        //新增人员
-        $("#btnAdd").on('click', function () {
-            layer.open({
-                title: '小记一笔',
-                type: 2,
-                anim: 1,
-                area: ['500px', '600px'],
-                content: '${ctx}/bill/addBill',
-                resize: false,
-                cancel: function () {
-                    console.log("-->取消了");
-                }
-            });
+        //新增文章
+        $("#btnAddArticle").on('click', function () {
+            window.open("${ctx}/article/addArticle");
         });
-
 
         //数组添加remove方法
         Array.prototype.remove = function (dx) {

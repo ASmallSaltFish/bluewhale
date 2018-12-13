@@ -14,11 +14,11 @@
         <result column="category_id" property="categoryId" jdbcType="VARCHAR"/>
         <result column="image_cover" property="imageCover" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
-        <result column="publish_date" property="publishDate" jdbcType="DATE"/>
+        <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP"/>
         <result column="content" property="content" jdbcType="CLOB"/>
         <result column="preview_content" property="previewContent" jdbcType="CLOB"/>
-        <result column="create_time" property="createTime" jdbcType="DATE"/>
-        <result column="last_modify_time" property="lastModifyTime" jdbcType="DATE"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP"/>
         <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
         <result column="last_modify_by" property="lastModifyBy" jdbcType="VARCHAR"/>
     </resultMap>
@@ -66,5 +66,6 @@
                 <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')<= DATE_FORMAT(#{article.publishEndDate}, '%Y-%m-%d') ]]>
             </if>
         </where>
+        order by a.create_time,a.last_modify_time desc
     </select>
 </mapper>

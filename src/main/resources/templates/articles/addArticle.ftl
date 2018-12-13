@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8"/>
     <title>写博客啦~</title>
-    <link rel="stylesheet" type="text/css" href="./static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
 
     <!-- <link rel="stylesheet" href="./static/css/style.css" /> -->
-    <link rel="stylesheet" href="./static/css/editormd.css"/>
+    <link rel="stylesheet" href="${ctx}/static/css/editormd.css"/>
 
     <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon"/>
 </head>
@@ -38,10 +38,10 @@
         <textarea style="display:none;"></textarea>
     </div>
 </div>
-<script src="./static/js/jquery.min.js"></script>
-<script src="./static/js/editormd.js"></script>
+<script src="${ctx}/static/js/jquery.min.js"></script>
+<script src="${ctx}/static/js/editormd.js"></script>
 
-<script type="text/javascript" src="./static/layui/layui.js"></script>
+<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 
 <script>
     //加载弹出层组件
@@ -54,7 +54,7 @@
         var editor = editormd("test-editormd", {
             width: "90%",
             height: 720,
-            path: './static/lib/',
+            path: '${ctx}/static/lib/',
             onfullscreen: function () {
                 alert("onfullscreen");
                 console.log("onfullscreen =>", this, this.id, this.settings);
