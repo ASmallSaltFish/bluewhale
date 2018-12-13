@@ -49,20 +49,20 @@
         select * from t_bw_article a
         <where>
             1=1
-            <if test="article.keyword!=null">
+            <if test="article.keyword!=null and article.keyword!=''">
                 and (
                 a.title like #{keyword} or
                 a.content like #{keyword} or
                 a.description like #{keyword}
                 )
             </if>
-            <if test="article.personalFlag!=null">
+            <if test="article.personalFlag!=null and article.personalFlag!=''">
                 and a.personal_flag=#{article.personalFlag}
             </if>
-            <if test="article.publishStartDate!=null">
+            <if test="article.publishStartDate!=null and article.publishStartDate!=''">
                 <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')>= DATE_FORMAT(#{article.publishStartDate}, '%Y-%m-%d') ]]>
             </if>
-            <if test="article.publishEndDate!=null">
+            <if test="article.publishEndDate!=null and article.publishEndDate!=''">
                 <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')<= DATE_FORMAT(#{article.publishEndDate}, '%Y-%m-%d') ]]>
             </if>
         </where>

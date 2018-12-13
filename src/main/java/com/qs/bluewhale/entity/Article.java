@@ -48,4 +48,10 @@ public class Article extends SuperEntity<Article> {
 
     @TableField(exist = false)
     private String keyword;
+
+    @TableField(exist = false)
+    private String createName;
+
+    @TableField(exist = false)
+    private String lasModifyName;
 }

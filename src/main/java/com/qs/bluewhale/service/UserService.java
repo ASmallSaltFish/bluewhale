@@ -27,4 +27,12 @@ public interface UserService extends IService<User> {
      * @param user 用户实体
      */
     void saveUser(User user);
+
+    /**
+     * 根据用户id获取用户实体信息
+     *
+     * @param userId 用户id
+     * @return 返回用户实体对象
+     */
+    User findUserByUserId(String userId);
 }

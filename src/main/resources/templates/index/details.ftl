@@ -14,7 +14,7 @@
     <![endif]-->
 </head>
 <body>
-<#include "common/header.ftl"/>
+<#include "../common/header.ftl"/>
 
 <div class="content whisper-content leacots-content details-content">
     <div class="cont w1000">
@@ -135,7 +135,7 @@
     </div>
 </script>
 
-<#include "common/footer.ftl"/>
+<#include "../common/footer.ftl"/>
 </body>
 
 

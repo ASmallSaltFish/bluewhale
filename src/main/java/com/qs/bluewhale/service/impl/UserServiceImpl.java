@@ -66,4 +66,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userRoleService.save(userRole);
         save(user);
     }
+
+    @Override
+    public User findUserByUserId(String userId) {
+        if (StringUtils.isBlank(userId)) {
+            throw new RuntimeException("param userName is null or empty");
+        }
+
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        User user = getOne(queryWrapper);
+        if (user == null) {
+            return user;
+        }
+
+        return user;
+    }
 }

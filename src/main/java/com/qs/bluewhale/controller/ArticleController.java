@@ -4,14 +4,17 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.qs.bluewhale.controller.base.BaseController;
 import com.qs.bluewhale.entity.Article;
+import com.qs.bluewhale.entity.User;
 import com.qs.bluewhale.entity.enums.ArticlePersonalFlagEnum;
 import com.qs.bluewhale.entity.enums.ArticleStatusEnum;
 import com.qs.bluewhale.service.ArticleService;
+import com.qs.bluewhale.service.UserService;
 import com.qs.bluewhale.utils.ExecutionContext;
 import com.qs.bluewhale.utils.JsonResult;
 import com.qs.bluewhale.utils.JsonStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +32,8 @@ public class ArticleController extends BaseController {
 
     @Resource
     private ArticleService articleService;
+    @Autowired
+    private UserService userService;
 
     @RequiresRoles("admin")
     @GetMapping(value = "/addArticle")
@@ -67,6 +72,18 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public Map<String, Object> listArticles(Page<Article> page, Article article) {
         Page<Article> articlePage = articleService.listArticlesPage(article, page);
+        if(articlePage.getResult()!=null&&articlePage.getResult().size()!=0){
+            for (Article a:articlePage.getResult()){
+                if (StringUtils.isNotBlank(a.getCreateBy())){
+                    User user1=userService.findUserByUserId(a.getCreateBy());
+                    a.setCreateName(user1.getUserName());
+                }
+                if (StringUtils.isNotBlank(a.getLastModifyBy())){
+                    User user2=userService.findUserByUserId(a.getLastModifyBy());
+                    a.setLasModifyName(user2.getUserName());
+                }
+            }
+        }
         PageInfo<Article> pageInfo = new PageInfo<>(articlePage);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("count", pageInfo.getTotal());
@@ -76,14 +93,14 @@ public class ArticleController extends BaseController {
     }
 
     @GetMapping(value = "/previewArticle")
-    public String previewArticle(String articleId, Model model) {
-        if (StringUtils.isBlank(articleId)) {
+    public String previewArticle(Article article, Model model) {
+        if (StringUtils.isBlank(article.getArticleId())) {
             throw new RuntimeException("404");
         }
 
-        Article article = articleService.getById(articleId);
+        article = articleService.getById(article.getArticleId());
         model.addAttribute("article", article);
-        return "/articles/previewArticle";
+        return "/articles/updateArticle";
     }
 
 }

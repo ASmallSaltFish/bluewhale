@@ -6,22 +6,20 @@
     <title>写博客啦~</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
 
-    <!-- <link rel="stylesheet" href="./static/css/style.css" /> -->
     <link rel="stylesheet" href="${ctx}/static/css/editormd.css"/>
 
     <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon"/>
 </head>
 
 <body>
-
 <div class="layui-row" style="margin-top: 20px;">
-    <div id="articleInfoForm" style="margin-left: 30px;">
+    <div id="articleInfoForm">
         <div class="layui-col-md12">
             <form class="layui-form" id="articleForm">
                 <div class="layui-form-item">
                     <label class="layui-form-label">文章标题</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="title" required lay-verify="required" placeholder="取个名字吧~"
+                        <input type="text" name="title" required lay-verify="required" value="${(article.title)!}"
                                autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
@@ -35,13 +33,11 @@
 
 <div id="layout">
     <div id="test-editormd">
-        <textarea style="display:none;"></textarea>
+        <textarea>${(article.content)!}</textarea>
     </div>
 </div>
 <script src="${ctx}/static/js/jquery.min.js"></script>
 <script src="${ctx}/static/js/editormd.js"></script>
-
-<script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
 
 <script>
     //加载弹出层组件

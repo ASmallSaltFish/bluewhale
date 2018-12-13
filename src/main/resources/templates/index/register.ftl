@@ -113,7 +113,7 @@
             $.post("ajaxRegister", regParam, function (data) {
                 if (data && data.status === "SUCCESS") {
                     layer.msg("注册成功！", {icon: 1, time: 3000}, function () {
-                        window.location.href = '${ctx}/login';
+                        window.location.href = '${ctx}/index/login';
                     });
                 } else {
                     layer.msg(data.msg || "注册失败！", {icon: 2, time: 3000});
