@@ -5,19 +5,23 @@
       定义实体属性和数据库字段之间映射对应关系
       jdbcType属性：org.apache.ibatis.type.JdbcType类中定义的枚举，需要大写
   -->
-    <!--<resultMap id="BaseResultMap" type="com.qs.bluewhale.entity.Article">-->
-        <!--<id column="article_id" property="articleId" jdbcType="VARCHAR"/>-->
-        <!--<result column="title" property="title" jdbcType="VARCHAR"/>-->
-        <!--<result column="author" property="author" jdbcType="VARCHAR"/>-->
-        <!--<result column="status" property="status" jdbcType="VARCHAR"/>-->
-        <!--<result column="personal_flag" property="personalFlag" jdbcType="VARCHAR"/>-->
-        <!--<result column="content" property="content" jdbcType="BLOB"/>-->
-        <!--<result column="preview_content" property="previewContent" jdbcType="BLOB"/>-->
-        <!--<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>-->
-        <!--<result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP"/>-->
-        <!--<result column="create_by" property="createBy" jdbcType="VARCHAR"/>-->
-        <!--<result column="last_modify_by" property="lastModifyBy" jdbcType="VARCHAR"/>-->
-    <!--</resultMap>-->
+    <resultMap id="BaseResultMap" type="com.qs.bluewhale.entity.Article">
+        <id column="article_id" property="articleId" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="personal_flag" property="personalFlag" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="VARCHAR"/>
+        <result column="image_cover" property="imageCover" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="publish_date" property="publishDate" jdbcType="DATE"/>
+        <result column="content" property="content" jdbcType="CLOB"/>
+        <result column="preview_content" property="previewContent" jdbcType="CLOB"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="last_modify_time" property="lastModifyTime" jdbcType="DATE"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="last_modify_by" property="lastModifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -33,4 +37,34 @@
         last_modify_time,
         last_modify_by
     </sql>
+
+    <select id="findList" resultMap="BaseResultMap">
+        select * from t_bw_article
+    </select>
+
+
+    <!-- 文章分页 -->
+    <select id="selectArticlePage" resultMap="BaseResultMap">
+        <bind name="keyword" value="'%' + article.keyword + '%'"/>
+        select * from t_bw_article a
+        <where>
+            1=1
+            <if test="article.keyword!=null">
+                and (
+                a.title like #{keyword} or
+                a.content like #{keyword} or
+                a.description like #{keyword}
+                )
+            </if>
+            <if test="article.personalFlag!=null">
+                and a.personal_flag=#{article.personalFlag}
+            </if>
+            <if test="article.publishStartDate!=null">
+                <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')>= DATE_FORMAT(#{article.publishStartDate}, '%Y-%m-%d') ]]>
+            </if>
+            <if test="article.publishEndDate!=null">
+                <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')<= DATE_FORMAT(#{article.publishEndDate}, '%Y-%m-%d') ]]>
+            </if>
+        </where>
+    </select>
 </mapper>

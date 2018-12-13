@@ -49,13 +49,52 @@ create table t_bw_user_role
 -- 文章表
 create table t_bw_article
 (
-  article_id       varchar(32),
+  article_id       varchar(32) primary key,
+  category_id      varchar(32),
   title            varchar(32),
   author           varchar(50),
   status           varchar(1),
   personal_flag    varchar(1),
+  description      varchar(500),
+  image_cover      varchar(200),
   content          text,
   preview_content  text,
+  publish_date    datetime,
+  create_time      datetime,
+  last_modify_time datetime,
+  create_by        varchar(32),
+  last_modify_by   varchar(32)
+);
+
+-- 文章类别表
+create table t_bw_article_category
+(
+  category_id      varchar(32) primary key,
+  category_name    varchar(50),
+  parent_id        varchar(32),
+  create_time      datetime,
+  last_modify_time datetime,
+  create_by        varchar(32),
+  last_modify_by   varchar(32)
+);
+
+-- 文章标签表
+create table t_bw_tag
+(
+  tag_id           varchar(32) primary key,
+  tag_name         varchar(50),
+  create_time      datetime,
+  last_modify_time datetime,
+  create_by        varchar(32),
+  last_modify_by   varchar(32)
+);
+
+-- 文章和标签 多对多
+create table t_bw_article_tag
+(
+  article_tag_id   varchar(32),
+  tag_id           varchar(32),
+  article_id       varchar(32),
   create_time      datetime,
   last_modify_time datetime,
   create_by        varchar(32),

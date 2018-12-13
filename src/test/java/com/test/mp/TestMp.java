@@ -1,12 +1,15 @@
 package com.test.mp;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+//import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageHelper;
 import com.qs.bluewhale.entity.Article;
 import com.qs.bluewhale.entity.Role;
 import com.qs.bluewhale.entity.User;
 import com.qs.bluewhale.entity.UserRole;
 import com.qs.bluewhale.entity.enums.ArticlePersonalFlagEnum;
 import com.qs.bluewhale.entity.enums.ArticleStatusEnum;
+import com.qs.bluewhale.mapper.ArticleMapper;
 import com.qs.bluewhale.mapper.UserRoleMapper;
 import com.qs.bluewhale.service.ArticleService;
 import com.qs.bluewhale.service.RoleService;
@@ -17,7 +20,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
-import java.rmi.activation.Activatable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +42,9 @@ public class TestMp extends BaseTest {
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Test
     public void test() {
@@ -88,12 +95,29 @@ public class TestMp extends BaseTest {
 
     @Test
     public void testSaveActicle() {
+        for (int i = 0; i < 25; i++) {
+            Article article = new Article();
+            article.setAuthor("qinyupeng");
+            article.setTitle("这是标题" + (i+1));
+            article.setContent("这是markdown正文");
+            article.setPreviewContent("这是markdown预览正文");
+            article.setDescription("这个是描述");
+            article.setPublishDate(new Date());
+            article.setPersonalFlag(ArticlePersonalFlagEnum.PUBLIC.getCode());
+            article.setStatus(ArticleStatusEnum.PUBLIAHED.getCode());
+            articleService.save(article);
+        }
+
+    }
+
+    @Test
+    public void testSelectArticlePage() {
+        PageHelper.startPage(1, 10);
         Article article = new Article();
-        article.setAuthor("qinyupeng");
-        article.setContent("这是markdown正文");
-        article.setPreviewContent("这是markdown预览正文");
+        article.setKeyword("markdown");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        article.setPublishEndDate(sdf.format(new Date()));
         article.setPersonalFlag(ArticlePersonalFlagEnum.PUBLIC.getCode());
-        article.setStatus(ArticleStatusEnum.DRAFTED.getCode());
-        articleService.save(article);
+        articleMapper.selectArticlePage(article);
     }
 }

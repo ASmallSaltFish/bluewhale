@@ -58,10 +58,10 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="//about">个人信息</a>
+                                <a href="${ctx}/about">个人信息</a>
                             </dd>
                             <dd>
-                                <a href="${ctx}/blogManager">博客管理</a>
+                                <a href="${ctx}/admin/index">博客管理</a>
                             </dd>
                             <dd>
                                 <a href="${ctx}/logout">退出</a>
