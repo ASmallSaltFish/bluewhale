@@ -123,20 +123,20 @@ public class TestMp extends BaseTest {
     public void saveTags(){
         List<TagInfo> tagInfos = new ArrayList<>();
         TagInfo tagInfo = new TagInfo();
-        tagInfo.setTagName("java");
+        tagInfo.setTagName("mysql");
         tagInfo.setCreateBy("1069915463289114625");
         tagInfo.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo);
 
         TagInfo tagInfo2 = new TagInfo();
-        tagInfo2.setTagName("Dubbo");
+        tagInfo2.setTagName("db2");
         tagInfo2.setCreateBy("1069915463289114625");
         tagInfo2.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo2);
 
 
         TagInfo tagInfo3 = new TagInfo();
-        tagInfo3.setTagName("Nginx");
+        tagInfo3.setTagName("oracle");
         tagInfo3.setCreateBy("1069915463289114625");
         tagInfo3.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo3);
@@ -144,21 +144,21 @@ public class TestMp extends BaseTest {
 
 
         TagInfo tagInfo4 = new TagInfo();
-        tagInfo4.setTagName("Zookeeper");
+        tagInfo4.setTagName("spring");
         tagInfo4.setCreateBy("1069915463289114625");
         tagInfo4.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo4);
 
 
         TagInfo tagInfo5 = new TagInfo();
-        tagInfo5.setTagName("多线程");
+        tagInfo5.setTagName("hibernate");
         tagInfo5.setCreateBy("1069915463289114625");
         tagInfo5.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo5);
 
 
         TagInfo tagInfo6 = new TagInfo();
-        tagInfo6.setTagName("分布式");
+        tagInfo6.setTagName("mybatis");
         tagInfo6.setCreateBy("1069915463289114625");
         tagInfo6.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo6);

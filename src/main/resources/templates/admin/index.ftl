@@ -42,22 +42,24 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">博客管理</a>
                     <dl class="layui-nav-child blog-manage-nav">
-                        <dd><a href="javascript:;" data-type="article-manage">文章管理</a></dd>
-                        <dd><a href="javascript:;" data-type="category-manage">类别管理</a></dd>
-                        <dd><a href="javascript:;" data-type="bookMarker-manage">书签管理</a></dd>
+                        <dd><a href="javascript:;" id="article-manage" data-type="tabAdd">文章管理</a></dd>
+                        <dd><a href="javascript:;" id="category-manage" data-type="tabAdd">类别管理</a></dd>
+                        <dd><a href="javascript:;" id="tag-manage" data-type="tabAdd">书签管理</a></dd>
                     </dl>
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="layui-body ">
-        <!-- 内容主体区域 -->
-        <div class="manage-content" style="padding: 15px;">内容主体区域</div>
+    <div class="layui-body" style="padding: 15px;">
+        <div class="layui-tab" lay-allowclose="true" lay-filter="mainTb">
+            <ul class="layui-tab-title" id="mainTbUl"></ul>
+            <div class="layui-tab-content" style="height: 150px;"></div>
+        </div>
     </div>
 
     <div class="layui-footer">
@@ -72,17 +74,85 @@
         var $ = layui.jquery;
 
         //第一次加载时，默认打开第一个菜单列表
-        var $firstNav = $('.blog-manage-nav').find("dd:first");
-        $firstNav.addClass("layui-this");
-        $(".manage-content").load("${ctx}/admin/articleManage");
+        firstLoad();
 
         //菜单点击事件
         $('.blog-manage-nav').find("a").click(function () {
             var $this = $(this);
-            if ($this.attr("data-type") === "article-manage") {
-                $(".manage-content").load("${ctx}/admin/articleManage");
+            var dataType = $this.attr("data-type");
+            if ($this.attr("id") === "article-manage") {
+                var content;
+                $.ajax({
+                    url: '${ctx}/admin/articleManage',
+                    type: 'GET',
+                    async: true,
+                    success: function (data) {
+                        content = data;
+                        active[dataType] ? active[dataType].call(this, $this, content) : '';
+                    }
+                });
+            } else if ($this.attr("id") === "category-manage") {
+                var content = "类别管理";
+                active[dataType] ? active[dataType].call(this, $this, content) : '';
+            } else if ($this.attr("id") === "tag-manage") {
+                var content;
+                $.ajax({
+                    url: '${ctx}/admin/tagManage',
+                    type: 'GET',
+                    async: true,
+                    success: function (data) {
+                        content = data;
+                        active[dataType] ? active[dataType].call(this, $this, content) : '';
+                    }
+                });
             }
         });
+
+        // 触发事件
+        var active = {
+            tabAdd: function (othis, content) {
+                //清除所有tab
+                clearAllTab();
+
+                var tabName = othis.text();
+                var tabId = othis.attr("id");
+                var $tabli = $("li[lay-id='" + tabId + "']");
+                //如果已经存在
+                if ($tabli.length > 0) {
+                    element.tabDelete('mainTb', id);
+                }
+
+                //新增一个Tab项
+                element.tabAdd('mainTb', {
+                    title: tabName,
+                    content: content,
+                    id: tabId
+                });
+                $("li[lay-id='" + tabId + "']").click();
+            }
+        };
+
+
+        function firstLoad() {
+            var $articleManage = $("#article-manage");
+            var content = "";
+            $.ajax({
+                url: '${ctx}/admin/articleManage',
+                type: 'GET',
+                async: true,
+                success: function (data) {
+                    content = data;
+                    active['tabAdd'].call(this, $articleManage, content);
+                }
+            });
+
+            $articleManage.parents("dd").eq(0).addClass("layui-this");
+        }
+
+        function clearAllTab() {
+            $("#mainTbUl").html("");
+            $(".layui-tab-content").html("");
+        }
     });
 </script>
 </body>

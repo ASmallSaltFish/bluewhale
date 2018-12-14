@@ -165,7 +165,7 @@
                                    '                                    <div class="layui-row grid-demo">\n' +
                                    '                                        <div class="layui-col-md12" style="height: 30px; line-height: 24px;">\n' +
                                    '                                            <h2>\n' +
-                                   '                                                <a href="${ctx}/article/previewArticle?articleId='+item["articleId"]+'">'+item["title"]+'</a>\n' +
+                                   '                                                <a href="${ctx}/article/displayArticle?articleId='+item["articleId"]+'">'+item["title"]+'</a>\n' +
                                    '                                            </h2>\n' +
                                    '                                        </div>\n' +
                                    '                                        <div class="layui-col-md12" style=" height:80px; overflow: hidden;">\n' +

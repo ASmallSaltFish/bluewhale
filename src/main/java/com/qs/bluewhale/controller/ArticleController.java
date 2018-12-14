@@ -12,6 +12,7 @@ import com.qs.bluewhale.service.UserService;
 import com.qs.bluewhale.utils.ExecutionContext;
 import com.qs.bluewhale.utils.JsonResult;
 import com.qs.bluewhale.utils.JsonStatus;
+import com.qs.bluewhale.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -74,42 +76,41 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public Map<String, Object> listArticles(Page<Article> page, Article article) {
         Page<Article> articlePage = articleService.listArticlesPage(article, page);
-        if(articlePage.getResult()!=null&&articlePage.getResult().size()!=0){
-            for (Article a:articlePage.getResult()){
-                if (StringUtils.isNotBlank(a.getCreateBy())){
-                    User user1=userService.findUserByUserId(a.getCreateBy());
+        if (articlePage.getResult() != null && articlePage.getResult().size() != 0) {
+            for (Article a : articlePage.getResult()) {
+                if (StringUtils.isNotBlank(a.getCreateBy())) {
+                    User user1 = userService.findUserByUserId(a.getCreateBy());
                     a.setCreateName(user1.getUserName());
                 }
-                if (StringUtils.isNotBlank(a.getLastModifyBy())){
-                    User user2=userService.findUserByUserId(a.getLastModifyBy());
+                if (StringUtils.isNotBlank(a.getLastModifyBy())) {
+                    User user2 = userService.findUserByUserId(a.getLastModifyBy());
                     a.setLasModifyName(user2.getUserName());
                 }
             }
         }
+
         PageInfo<Article> pageInfo = new PageInfo<>(articlePage);
-        Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("count", pageInfo.getTotal());
-        dataMap.put("data", pageInfo.getList());
-        dataMap.put("code", 0);
-        return dataMap;
+        return PageUtils.wrapPageDataToMap(pageInfo);
     }
 
     /**
      * 预览文章
      */
     @GetMapping(value = "/previewArticle")
-    public String previewArticle(Article article, Model model) {
+    public String previewArticle(Article article, Model model, HttpServletRequest request) {
         if (StringUtils.isBlank(article.getArticleId())) {
             throw new RuntimeException("404");
         }
 
         article = articleService.findArticleById(article.getArticleId());
+        model.addAttribute("refer", request.getParameter("refer"));
         model.addAttribute("article", article);
-        return "/articles/updateArticle";
+        return "/articles/previewArticle";
     }
 
     /**
      * 修改文章
+     *
      * @param article
      * @return
      */
@@ -117,8 +118,8 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public JsonResult updateArticle(Article article) {
         JsonResult jsonResult = new JsonResult();
-        Article article1=articleService.findArticleById(article.getArticleId());
-        if(article1==null){
+        Article article1 = articleService.findArticleById(article.getArticleId());
+        if (article1 == null) {
             jsonResult.setMsg("该原文章不存在！");
             return jsonResult;
         }
@@ -137,6 +138,20 @@ public class ArticleController extends BaseController {
         articleService.updateById(article1);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
+    }
+
+    /**
+     * 首页查看文章
+     */
+    @GetMapping(value = "/displayArticle")
+    public String displayArticle(Article article, Model model) {
+        if (StringUtils.isBlank(article.getArticleId())) {
+            throw new RuntimeException("404");
+        }
+
+        article = articleService.findArticleById(article.getArticleId());
+        model.addAttribute("article", article);
+        return "/articles/displayArticle";
     }
 
 }

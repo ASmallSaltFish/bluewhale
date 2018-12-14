@@ -19,4 +19,9 @@ public class AdminController {
     public String articleManage(){
         return "/admin/articleManage";
     }
+
+    @GetMapping(value = "/tagManage")
+    public String tagManage(){
+        return "/admin/tagManage";
+    }
 }
