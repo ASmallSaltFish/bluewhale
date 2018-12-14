@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,15 +94,49 @@ public class ArticleController extends BaseController {
         return dataMap;
     }
 
+    /**
+     * 预览文章
+     */
     @GetMapping(value = "/previewArticle")
     public String previewArticle(Article article, Model model) {
         if (StringUtils.isBlank(article.getArticleId())) {
             throw new RuntimeException("404");
         }
 
-        article = articleService.getById(article.getArticleId());
+        article = articleService.findArticleById(article.getArticleId());
         model.addAttribute("article", article);
         return "/articles/updateArticle";
+    }
+
+    /**
+     * 修改文章
+     * @param article
+     * @return
+     */
+    @PostMapping(value = "/updateArticle")
+    @ResponseBody
+    public JsonResult updateArticle(Article article) {
+        JsonResult jsonResult = new JsonResult();
+        Article article1=articleService.findArticleById(article.getArticleId());
+        if(article1==null){
+            jsonResult.setMsg("该原文章不存在！");
+            return jsonResult;
+        }
+        String lasModifyId = ExecutionContext.getUserId();
+        if (StringUtils.isBlank(article.getTitle()) || StringUtils.isBlank(article.getContent())
+                || StringUtils.isBlank(article.getPreviewContent()) || StringUtils.isBlank(lasModifyId)) {
+            jsonResult.setMsg("参数校验错误！");
+            return jsonResult;
+        }
+
+        article1.setTitle(article.getTitle());
+        article1.setContent(article.getContent());
+        article1.setPreviewContent(article.getPreviewContent());
+        article1.setLastModifyBy(lasModifyId);
+        article1.setLastModifyTime(new Timestamp(new Date().getTime()));
+        articleService.updateById(article1);
+        jsonResult.setStatus(JsonStatus.SUCCESS);
+        return jsonResult;
     }
 
 }
