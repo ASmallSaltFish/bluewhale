@@ -18,17 +18,12 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/article")
@@ -86,6 +81,15 @@ public class ArticleController extends BaseController {
                     User user2 = userService.findUserByUserId(a.getLastModifyBy());
                     a.setLasModifyName(user2.getUserName());
                 }
+                if (StringUtils.isNotBlank(a.getStatus())){
+                    if (ArticleStatusEnum.PUBLIAHED.getCode().equals(a.getStatus())){
+                        a.setStatus(ArticleStatusEnum.PUBLIAHED.getDesc());
+                    }else if (ArticleStatusEnum.DRAFTED.getCode().equals(a.getStatus())){
+                        a.setStatus(ArticleStatusEnum.DRAFTED.getDesc());
+                    }else if (ArticleStatusEnum.DELETED.getCode().equals(a.getStatus())){
+                        a.setStatus(ArticleStatusEnum.DELETED.getDesc());
+                    }
+                }
             }
         }
 
@@ -110,7 +114,6 @@ public class ArticleController extends BaseController {
 
     /**
      * 修改文章
-     *
      * @param article
      * @return
      */
@@ -136,6 +139,60 @@ public class ArticleController extends BaseController {
         article1.setLastModifyBy(lasModifyId);
         article1.setLastModifyTime(new Timestamp(new Date().getTime()));
         articleService.updateById(article1);
+        jsonResult.setStatus(JsonStatus.SUCCESS);
+        return jsonResult;
+    }
+
+    /**
+     * 发布文章
+     */
+    @RequestMapping(value = "/publishArticle", method = {RequestMethod.POST})
+    @ResponseBody
+    public JsonResult publishArticle(HttpServletRequest request) {
+        JsonResult jsonResult = new JsonResult();
+        String[] articleIds=request.getParameterValues("selectedArticleIds[]");
+        if (articleIds==null||articleIds.length==0) {
+            jsonResult.setMsg("参数校验错误！");
+            return jsonResult;
+        }
+        List<Article> articles=new ArrayList<>();
+        for(int i=0;i<articleIds.length;i++){
+            Article article=articleService.findArticleById(articleIds[i]);
+            if (ArticleStatusEnum.PUBLIAHED.getCode().equals(article.getStatus())){
+                jsonResult.setMsg("选中的文章包含已发布文章！");
+                return jsonResult;
+            }
+            article.setStatus(ArticleStatusEnum.PUBLIAHED.getCode());
+            article.setLastModifyTime(new Timestamp(new Date().getTime()));
+            articles.add(article);
+        }
+        articleService.updateBatchById(articles);
+        jsonResult.setStatus(JsonStatus.SUCCESS);
+        return jsonResult;
+    }
+
+    /**
+     * 删除文章
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/deleteArticle", method = {RequestMethod.POST})
+    @ResponseBody
+    public JsonResult deleteArticle(HttpServletRequest request) {
+        JsonResult jsonResult = new JsonResult();
+        String[] articleIds=request.getParameterValues("selectedArticleIds[]");
+        if (articleIds==null||articleIds.length==0) {
+            jsonResult.setMsg("参数校验错误！");
+            return jsonResult;
+        }
+        List<Article> articles=new ArrayList<>();
+        for(int i=0;i<articleIds.length;i++){
+            Article article=articleService.findArticleById(articleIds[i]);
+            article.setStatus(ArticleStatusEnum.DELETED.getCode());
+            article.setLastModifyTime(new Timestamp(new Date().getTime()));
+            articles.add(article);
+        }
+        articleService.updateBatchById(articles);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
     }

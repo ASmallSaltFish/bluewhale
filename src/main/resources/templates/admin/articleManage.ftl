@@ -71,6 +71,7 @@
                 {checkbox: true, fiexed: true, unresize: true},
                 {field: 'title', title: '标题'},
                 {field: 'author', title: '作者'},
+                {field: 'status', title: '状态'},
                 {field: 'categoryId', title: '分类'},
                 {field: 'description', title: '描述'},
                 {field: 'createName', title: '创建人'},
@@ -137,7 +138,7 @@
                 if (obj.type === 'one') {
                     for (var i = 0; i < selectedArticleIds.length; i++) {
                         if (selectedArticleIds[i] === obj.data.articleId) {
-                            selectedArticleIds.remove(i);
+                            selectedArticleIds.remove(selectedArticleIds[i]);
                         }
                     }
                 } else {
@@ -190,20 +191,62 @@
             });
         });
 
-        //数组添加remove方法
-        Array.prototype.remove = function (dx) {
-            if (isNaN(dx) || dx < this.length) {
+        //发布文章
+        $("#btnPublishArticle").on('click',function () {
+            if(selectedArticleIds==null||selectedArticleIds.length==0){
+                layer.msg('请选择想要预览的文章！', {icon: 2});
                 return false;
             }
-
-            for (var i = 0, n = 0; i < this.length; i++) {
-                if (this[i] != this[dx]) {
-                    this[n++] = this[i];
+            $.ajax({
+                type:'POST',
+                url:'${ctx}/article/publishArticle',
+                contentType: "application/x-www-form-urlencoded",
+                data: {"selectedArticleIds":selectedArticleIds},
+                success : function(data) {
+                    console.log(data);
+                    if (data && data.status === "SUCCESS") {
+                        layer.msg('发布成功！', {icon: 1, time: 3000}, function () {
+                            window.location.href = '${ctx}/admin/index';
+                        });
+                    } else {
+                        layer.msg(data.msg || '发布出现错误！', {icon: 2, time: 3000});
+                    }
                 }
-            }
+            });
+        });
 
-            this.length -= 1;
-        }
+        //删除文章
+        $("#btnDeleteArticle").on('click',function () {
+            if(selectedArticleIds==null||selectedArticleIds.length==0){
+                layer.msg('请选择想要预览的文章！', {icon: 2});
+                return false;
+            }
+            alert("您确定要删除选中的文章吗？");
+            $.ajax({
+                type:'POST',
+                url:'${ctx}/article/deleteArticle',
+                contentType: "application/x-www-form-urlencoded",
+                data: {"selectedArticleIds":selectedArticleIds},
+                success : function(data) {
+                    console.log(data);
+                    if (data && data.status === "SUCCESS") {
+                        layer.msg('删除成功！', {icon: 1, time: 3000}, function () {
+                            window.location.href = '${ctx}/admin/index';
+                        });
+                    } else {
+                        layer.msg(data.msg || '删除出现错误！', {icon: 2, time: 3000});
+                    }
+                }
+            });
+        });
+
+        //数组添加remove方法
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
     });
 </script>
 
