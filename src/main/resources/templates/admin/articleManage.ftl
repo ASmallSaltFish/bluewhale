@@ -33,7 +33,7 @@
     <div class="layui-row" style="margin-top: 20px;">
         <button class="layui-btn layui-btn-sm" id="btnAddArticle">新增文章</button>
         <button class="layui-btn layui-btn-sm" id="btnPreviewArticle">预览</button>
-        <button class="layui-btn layui-btn-sm" id="btnUpdateArticle">修改</button>
+        <#--<button class="layui-btn layui-btn-sm" id="btnUpdateArticle">修改</button>-->
         <button class="layui-btn layui-btn-sm" id="btnPublishArticle">发布</button>
         <button class="layui-btn layui-btn-sm" id="btnDeleteArticle">删除</button>
     </div>
@@ -74,9 +74,9 @@
                 {field: 'categoryId', title: '分类'},
                 {field: 'description', title: '描述'},
                 {field: 'createName', title: '创建人'},
-                {field: 'createTime', title: '创建时间', templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+                {field: 'createTime', title: '创建时间', templet: "#createTimeTb"},
                 {field: 'lasModifyName', title: '修改人'},
-                {field: 'lastModifyTime', title: '修改时间', templet: "<div>{{layui.util.toDateString(d.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                {field: 'lastModifyTime', title: '修改时间', templet: "#lastModifyTimeTb"}
             ]],
             id:'allArticleListTb',
             limits:[5, 10],
@@ -181,6 +181,18 @@
             this.length -= 1;
         }
     });
+</script>
+
+<script type="text/html" id="createTimeTb">
+    {{# if(d.createTime!==null){ }}
+    <div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="lastModifyTimeTb">
+    {{# if(d.lastModifyTime!==null){ }}
+    <div>{{layui.util.toDateString(d.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}}</div>
+    {{# } }}
 </script>
 </body>
 

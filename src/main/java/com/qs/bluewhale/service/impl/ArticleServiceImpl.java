@@ -37,5 +37,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.listArticles();
     }
 
+    @Override
+    public Article findArticleById(String articleId) {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("article_id",articleId);
+        return getOne(queryWrapper);
+    }
+
 
 }

@@ -21,6 +21,7 @@
                     <div class="layui-input-inline">
                         <input type="text" name="title" required lay-verify="required" value="${(article.title)!}"
                                autocomplete="off" class="layui-input">
+                        <input type="text" name="articleId" style="display: none;" value="${(article.articleId)!}">
                     </div>
                     <div class="layui-input-inline">
                         <button class="layui-btn" type="button" id="btnSave">保存</button>
@@ -64,22 +65,24 @@
         //保存文章
         $("#btnSave").on('click', function () {
             var $articleForm = $("#articleForm");
+            var articleId=$articleForm.find("input[name='articleId']").val();
             var title = $articleForm.find("input[name='title']").val();
             var content = editor.getValue();
             var previewContent = editor.getPreviewedHTML();
             var param = {
+                'articleId':articleId,
                 'title': title,
                 'content': content,
                 'previewContent': previewContent
             };
 
-            $.post('${ctx}/article/saveArticle', param, function (data) {
+            $.post('${ctx}/article/updateArticle', param, function (data) {
                 if (data && data.status === "SUCCESS") {
-                    layer.msg('保存成功！', {icon: 1, time: 3000}, function () {
+                    layer.msg('更新成功！', {icon: 1, time: 3000}, function () {
                         window.location.href = '${ctx}/admin/index';
                     });
                 } else {
-                    layer.msg(data.msg || '保存出现错误！', {icon: 2, time: 3000});
+                    layer.msg(data.msg || '更新出现错误！', {icon: 2, time: 3000});
                 }
             });
         })
