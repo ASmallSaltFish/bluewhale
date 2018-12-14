@@ -1,26 +1,20 @@
 package com.test.mp;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-//import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageHelper;
-import com.qs.bluewhale.entity.Article;
-import com.qs.bluewhale.entity.Role;
-import com.qs.bluewhale.entity.User;
-import com.qs.bluewhale.entity.UserRole;
+import com.qs.bluewhale.entity.*;
 import com.qs.bluewhale.entity.enums.ArticlePersonalFlagEnum;
 import com.qs.bluewhale.entity.enums.ArticleStatusEnum;
 import com.qs.bluewhale.mapper.ArticleMapper;
 import com.qs.bluewhale.mapper.UserRoleMapper;
-import com.qs.bluewhale.service.ArticleService;
-import com.qs.bluewhale.service.RoleService;
-import com.qs.bluewhale.service.UserRoleService;
-import com.qs.bluewhale.service.UserService;
+import com.qs.bluewhale.service.*;
 import com.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +32,9 @@ public class TestMp extends BaseTest {
 
     @Resource
     private ArticleService articleService;
+
+    @Resource
+    private TagInfoService tagInfoService;
 
 
     @Autowired
@@ -95,7 +92,7 @@ public class TestMp extends BaseTest {
 
     @Test
     public void testSaveActicle() {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 200; i++) {
             Article article = new Article();
             article.setAuthor("qinyupeng");
             article.setTitle("这是标题" + (i+1));
@@ -119,5 +116,53 @@ public class TestMp extends BaseTest {
         article.setPublishEndDate(sdf.format(new Date()));
         article.setPersonalFlag(ArticlePersonalFlagEnum.PUBLIC.getCode());
         articleMapper.selectArticlePage(article);
+    }
+
+
+    @Test
+    public void saveTags(){
+        List<TagInfo> tagInfos = new ArrayList<>();
+        TagInfo tagInfo = new TagInfo();
+        tagInfo.setTagName("java");
+        tagInfo.setCreateBy("1069915463289114625");
+        tagInfo.setLastModifyBy("1069915463289114625");
+        tagInfos.add(tagInfo);
+
+        TagInfo tagInfo2 = new TagInfo();
+        tagInfo2.setTagName("Dubbo");
+        tagInfo2.setCreateBy("1069915463289114625");
+        tagInfo2.setLastModifyBy("1069915463289114625");
+        tagInfos.add(tagInfo2);
+
+
+        TagInfo tagInfo3 = new TagInfo();
+        tagInfo3.setTagName("Nginx");
+        tagInfo3.setCreateBy("1069915463289114625");
+        tagInfo3.setLastModifyBy("1069915463289114625");
+        tagInfos.add(tagInfo3);
+
+
+
+        TagInfo tagInfo4 = new TagInfo();
+        tagInfo4.setTagName("Zookeeper");
+        tagInfo4.setCreateBy("1069915463289114625");
+        tagInfo4.setLastModifyBy("1069915463289114625");
+        tagInfos.add(tagInfo4);
+
+
+        TagInfo tagInfo5 = new TagInfo();
+        tagInfo5.setTagName("多线程");
+        tagInfo5.setCreateBy("1069915463289114625");
+        tagInfo5.setLastModifyBy("1069915463289114625");
+        tagInfos.add(tagInfo5);
+
+
+        TagInfo tagInfo6 = new TagInfo();
+        tagInfo6.setTagName("分布式");
+        tagInfo6.setCreateBy("1069915463289114625");
+        tagInfo6.setLastModifyBy("1069915463289114625");
+        tagInfos.add(tagInfo6);
+
+        tagInfoService.saveBatch(tagInfos);
     }
 }

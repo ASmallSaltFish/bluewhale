@@ -122,11 +122,11 @@ body {
 
 
 .content {
-    padding: 100px 0 160px 0;
+    padding: 30px 0 50px 0;
 }
 
 .content .cont .title {
-    margin-bottom: 60px;
+    margin-bottom: 25px;
 }
 
 .content .cont .title a {
@@ -141,7 +141,7 @@ body {
 }
 
 .content .cont .title a.active, .content .cont .title a:hover {
-    color: #ff7f21 !important;
+    color: black !important;
 }
 
 .content .cont .list-item .layui-fluid {

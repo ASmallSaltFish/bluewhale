@@ -38,23 +38,9 @@
         <button class="layui-btn layui-btn-sm" id="btnDeleteArticle">删除</button>
     </div>
 
-    <div class="layui-tab" style="margin-top: 10px;">
-        <ul class="layui-tab-title" lay-filter="openTypeTab" >
-            <li class="layui-this" data-type="ALL">所有文章</li>
-            <li data-type="ARTICLE_PUBLIC">公开</li>
-            <li data-type="ARTICLE_PRIVATE">私有</li>
-        </ul>
-
-        <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show">
-                <table class="layui-hide" id="allArticleListTb" lay-filter="article"></table>
-            </div>
-            <div class="layui-tab-item">
-                <table class="layui-hide" id="articlePublicListTb" lay-filter="article"></table>
-            </div>
-            <div class="layui-tab-item">
-                <table class="layui-hide" id="articlePrivateListTb" lay-filter="article"></table>
-            </div>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table class="layui-hide" id="allArticleListTb" lay-filter="article"></table>
         </div>
     </div>
 </div>
@@ -62,15 +48,6 @@
 <script src="${ctx}/static/js/jquery.min.js"></script>
 
 <script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
-
-<!--时间格式化-->
-<script id="createTime" type="text/html">
-    {{#
-    var date = new Date();
-    date.setTime(d.createTime);
-    return date.Format("yyyy-MM-dd hh:mm:ss");
-    }}
-</script>
 
 <script>
     //加载弹出层组件
@@ -95,7 +72,6 @@
                 {field: 'title', title: '标题'},
                 {field: 'author', title: '作者'},
                 {field: 'categoryId', title: '分类'},
-                {field: 'imageCover', title: '封面'},
                 {field: 'description', title: '描述'},
                 {field: 'createName', title: '创建人'},
                 {field: 'createTime', title: '创建时间', templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,6 +9,8 @@
     <#--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
+    <link rel="stylesheet" href="${ctx}/static/css/tagAll.css">
+    <link rel="stylesheet" href="${ctx}/static/css/tagStyle.css">
 
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
@@ -16,15 +19,23 @@
     <![endif]-->
 
     <style>
-        .article-list a:hover{
-            color: blue;
+        body{
+            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         }
 
-        .article-item {
-            height: 140px;
-            line-height: 24px;
-            margin: 10px auto;
-            background-color: #f8f9fa;
+        #articleDiv a {
+            color: #17a2b8;
+        }
+
+        #articleDiv a:hover {
+            text-underline: none;
+            color: #ff7f21;
+        }
+
+        .title-black-blod{
+            color: black;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -35,67 +46,81 @@
 <div class="banner">
     <div class="layui-carousel" id="myCarousel">
         <div carousel-item>
-            <div><img src="${ctx}/static/img/bannel/bannel_1.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/static/img/bannel/bannel_2.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/static/img/bannel/bannel_3.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/static/img/bannel/bannel_4.jpg" width="100%" height="600px"></div>
-            <div><img src="${ctx}/static/img/bannel/bannel_5.jpg" width="100%" height="600px"></div>
+            <div>
+                <img src="${ctx}/static/img/bannel/bannel_1.jpg" width="100%" height="600px">
+            </div>
+            <div>
+                <img src="${ctx}/static/img/bannel/bannel_2.jpg" width="100%" height="600px">
+            </div>
+            <div>
+                <img src="${ctx}/static/img/bannel/bannel_3.jpg" width="100%" height="600px">
+            </div>
+            <div>
+                <img src="${ctx}/static/img/bannel/bannel_4.jpg" width="100%" height="600px">
+            </div>
+            <div>
+                <img src="${ctx}/static/img/bannel/bannel_5.jpg" width="100%" height="600px">
+            </div>
         </div>
     </div>
 </div>
 
 <div class="content">
     <div class="cont w1000">
-        <div class="title">
-        <span class="layui-breadcrumb" lay-separator="|">
-          <a href="javascript:;" class="active">设计文章</a>
-          <a href="javascript:;">前端文章</a>
-          <a href="javascript:;">旅游杂记</a>
-        </span>
+        <div class="title title-black-blod">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">
+                        <a href="javascript:;" class="active">
+                            <i class="layui-icon layui-icon-list"></i>
+                            时间排序
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-fire" style="color: red;"></i>
+                            热度排序
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="list-item">
-            <#if articleList??>
-                <#list articleList as article>
-                    <div class="article-item">
-                        <div class="layui-col-md4 layui-col-sm6 layui-col-xs6 layui-col-space30">
-                            <img src="./static/images/bg-01.jpg" height="130px" width="80%">
-                        </div>
-                        <div class="layui-col-md8 layui-col-sm6 layui-col-xs6">
-                            <div class="layui-row article-list">
-                                <div class="layui-col-md12">
-                                    <a href="${ctx}/article/previewArticle?articleId=${(article.articleId)!}"><h3>${(article.title)!}</h3></a>
-                                </div>
-                                <div class="article-main-body">
-                                    <div class="layui-col-md12" style="height:75px; overflow:hidden;">
-                                        ${(article.desc)!}这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述
-                        这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描
-                                    </div>
-                                    <div class="layui-col-md6 layui-col-xs6 layui-col-sm6" style="line-height: 35px;">
-                                        <i class="layui-icon layui-icon-username" style="color: orange;"></i><span>&nbsp;${(article.author)!}</span>
-                                        &nbsp; | &nbsp;
-                                        <i class="layui-icon layui-icon-read" style="color: orange;"></i><span>&nbsp;javaSript,java,mysql</span>
-                                    </div>
+        <div class="layui-row article-row" style="margin-bottom: 50px;">
+            <div class="layui-col-md8 layui-col-sm-12 layui-col-space10">
+                <div id="articleDiv">博客列表在这里啦~~</div>
 
-                                    <div class="layui-col-md6 layui-col-xs6 layui-col-sm6" style="text-align: right">
-                                        <i class="layui-icon layui-icon-praise" style="color: orange"></i>
-                                        &nbsp; | &nbsp;
-                                        <i class="layui-icon layui-icon-dialogue" style="margin-right: 20px; color: orange;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <#-- 分页 -->
+                <div id="indexPage" style="text-align: center; margin-top: 50px; color: black;"></div>
+            </div>
+
+            <div class="layui-col-md4 layui-col-sm12 layui-col-xs12 hidden-xs" style="margin: 20px 0 0 10px; background-color: #ffffff; color: #000; height: 500px; overflow-y: scroll;">
+                <div class="layui-tab layui-tab-brief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">
+                            <i class="layui-icon layui-icon-note"></i>
+                            标签云
+                        </li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <ul class="ks-cboxtags">
+                            <#if tagInfoList??>
+                                <#list tagInfoList as tagInfo>
+                                    <li>
+                                        <input type="checkbox" id="${(tagInfo.tagName)!}" data-id="${(tagInfo.tagId)!}" value="${(tagInfo.tagName)!}">
+                                        <label for="${(tagInfo.tagName)!}">${(tagInfo.tagName)!}</label>
+                                    </li>
+                                </#list>
+                            <#else>
+                                暂无标签数据哟~
+                            </#if>
+                        </ul>
                     </div>
-                </#list>
-            <#else>
-                你还未发布任何博客哟~
-            </#if>
-
+                </div>
+            </div>
         </div>
-        <div id="demo" style="text-align: center;"></div>
     </div>
-</div>
 
-<#include "../common/footer.ftl"/>
+    <#include "../common/footer.ftl"/>
 </body>
 
 <script type="text/javascript" src="${ctx}/static/layui/layui.js"></script>
@@ -111,8 +136,71 @@
         var carousel = layui.carousel;
 
         laypage.render({
-            elem: 'demo',
-            count: 70 //数据总数，从服务端得到
+            elem: 'indexPage',
+            count: 204,
+            jump: function (obj, first) {
+                var param = {
+                    'pageNum': obj.curr,
+                    'pageSize': obj.limit
+                };
+
+                var articles = [];
+                $.ajax({
+                    url: '${ctx}/listArticles',
+                    data: param,
+                    async: false,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function(data){
+                       articles =  data.data;
+                       console.log(articles);
+                       $("#articleDiv").html(function(){
+                           var contentArr = [];
+                           layui.each(articles, function (index, item) {
+                               contentArr.push('<div style="height:135px; margin: 20px 30px 5px 0px; background-color: #ffffff">\n' +
+                                   '                                <div class="layui-col-md4 layui-col-sm6 layui-col-xs6">\n' +
+                                   '                                    <img src="./static/images/bg-01.jpg" height="130px;" width="95%">\n' +
+                                   '                                </div>\n' +
+                                   '                                <div class="layui-col-md8 layui-col-sm6 layui-col-xs6" style="text-align: left;">\n' +
+                                   '                                    <div class="layui-row grid-demo">\n' +
+                                   '                                        <div class="layui-col-md12" style="height: 30px; line-height: 24px;">\n' +
+                                   '                                            <h2>\n' +
+                                   '                                                <a href="${ctx}/article/previewArticle?articleId='+item["articleId"]+'">'+item["title"]+'</a>\n' +
+                                   '                                            </h2>\n' +
+                                   '                                        </div>\n' +
+                                   '                                        <div class="layui-col-md12" style=" height:80px; overflow: hidden;">\n' +
+                                   '                                            '+item["description"]+'\n' +
+                                   '                                        </div>\n' +
+                                   '                                        <div class="layui-col-md12" style="line-height: 25px;">\n' +
+                                   '                                            <div class="layui-row">\n' +
+                                   '                                                <div class="layui-col-md9 layui-col-xs6 layui-col-sm6">\n' +
+                                   '                                                    <i class="layui-icon layui-icon-username" style="color: orange;"></i>\n' +
+                                   '                                                    <span>${(loginUser.userName)!}</span>\n' +
+                                   '                                                    &nbsp;\n' +
+                                   '                                                    <span style="color: #777">|</span> &nbsp;\n' +
+                                   '                                                    <i class="layui-icon layui-icon-read" style="color: orange;"></i>\n' +
+                                   '                                                    <span>javaScript,java,mysql</span>\n' +
+                                   '                                                </div>\n' +
+                                   '                                                <div class="layui-col-md3 layui-col-xs6 layui-col-sm6" style="text-align: right;">\n' +
+                                   '                                                    <i class="layui-icon layui-icon-praise" style="color: orange;"></i>\n' +
+                                   '                                                    &nbsp;\n' +
+                                   '                                                    <span style="color: #777">|</span> &nbsp;\n' +
+                                   '                                                    <a href="${ctx}/leacots">\n' +
+                                   '                                                        <i class="layui-icon layui-icon-dialogue" style="color: orange;"></i>\n' +
+                                   '                                                    </a>\n' +
+                                   '                                                </div>\n' +
+                                   '                                            </div>\n' +
+                                   '                                        </div>\n' +
+                                   '                                    </div>\n' +
+                                   '                                </div>\n' +
+                                   '                            </div>');
+                           });
+
+                           return contentArr.join('');
+                       });
+                    }
+                });
+            }
         });
 
         menu.init();
@@ -126,4 +214,5 @@
         });
     })
 </script>
+
 </html>

@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ArticleMapper extends BaseMapper<Article> {
 
     Page<Article> selectArticlePage(@Param("article") Article article);
+
+    Page<Article> listArticles();
 }

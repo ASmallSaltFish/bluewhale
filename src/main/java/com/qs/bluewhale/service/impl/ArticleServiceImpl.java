@@ -31,5 +31,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.selectArticlePage(article);
     }
 
+    @Override
+    public Page<Article> listArticlesPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return articleMapper.listArticles();
+    }
+
 
 }

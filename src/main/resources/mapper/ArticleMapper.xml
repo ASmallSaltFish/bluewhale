@@ -66,6 +66,12 @@
                 <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')<= DATE_FORMAT(#{article.publishEndDate}, '%Y-%m-%d') ]]>
             </if>
         </where>
-        order by a.create_time,a.last_modify_time desc
+        order by a.last_modify_time desc,a.create_time desc
+    </select>
+
+
+    <!-- 文章分页 -->
+    <select id="listArticles" resultMap="BaseResultMap">
+        select * from t_bw_article a
     </select>
 </mapper>
