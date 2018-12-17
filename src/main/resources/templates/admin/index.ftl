@@ -92,7 +92,16 @@
                     }
                 });
             } else if ($this.attr("id") === "category-manage") {
-                var content = "类别管理";
+                var content;
+                $.ajax({
+                    url: '${ctx}/admin/categoryManage',
+                    type: 'GET',
+                    async: true,
+                    success: function (data) {
+                        content = data;
+                        active[dataType] ? active[dataType].call(this, $this, content) : '';
+                    }
+                });
                 active[dataType] ? active[dataType].call(this, $this, content) : '';
             } else if ($this.attr("id") === "tag-manage") {
                 var content;

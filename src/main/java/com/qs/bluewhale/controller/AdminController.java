@@ -20,6 +20,11 @@ public class AdminController {
         return "/admin/articleManage";
     }
 
+    @GetMapping(value = "/categoryManage")
+    public String categoryManage(){
+        return "/admin/categoryManage";
+    }
+
     @GetMapping(value = "/tagManage")
     public String tagManage(){
         return "/admin/tagManage";

@@ -1,7 +1,7 @@
 <div class="demoTable" style="margin-top: 20px;">
     <div class="layui-inline" style="margin-right: 10px;">
         <input style="width: 250px;" class="layui-input" name="article.keyword" id="keyword" autocomplete="off"
-               placeholder="标签名称">
+               placeholder="类别名称">
     </div>
 
     <button class="layui-btn" data-type="reload" id="search">搜索</button>
@@ -14,7 +14,7 @@
 
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-            <table class="layui-hide" id="allTagInfoTb" lay-filter="tagInfo"></table>
+            <table class="layui-hide" id="allCategoryInfoTb" lay-filter="categoryInfo"></table>
         </div>
     </div>
 </div>
@@ -37,17 +37,17 @@
         var table_data = [];
         //第一个实例
         table.render({
-            elem: '#allTagInfoTb',
+            elem: '#allCategoryInfoTb',
             height: 500,
-            url: '${ctx}/tag/listTagPage',
+            url: '${ctx}/category/listCategoryPage',
             page: true,
             cols: [[
                 {checkbox: true, fiexed: true, unresize: true},
-                {field: 'tagName', title: '标签名称'},
+                {field: 'categoryName', title: '类别名称'},
                 {field: 'createTime', title: '创建时间', templet: "#createTimeTb"},
                 {field: 'lastModifyTime', title: '修改时间', templet: "#lastModifyTimeTb"}
             ]],
-            id: 'allTagInfoTb',
+            id: 'allCategoryInfoTb',
             limits: [5, 10],
             where: {
                 'keyword': $("#keyword").val()
@@ -65,7 +65,7 @@
         //搜索文章
         $("#search").click(function () {
             var keyword = $("#keyword").val();
-            table.reload("allTagInfoTb", {
+            table.reload("allCategoryInfoTb", {
                 page: {
                     curr: 1
                 },
@@ -76,33 +76,33 @@
         });
 
         //存储选中行的userId
-        var selectedTagIds = [];
+        var selectedCategoryIds = [];
         table.on('checkbox(article)', function (obj) {
             if (obj.checked === true) {
                 if (obj.type === 'one') {
-                    selectedTagIds.push(obj.data.tagId);
+                    selectedCategoryIds.push(obj.data.categoryId);
                 } else {
                     for (var i = 0; i < table_data.length; i++) {
-                        selectedTagIds.push(table_data[i].tagId);
+                        selectedCategoryIds.push(table_data[i].categoryId);
                     }
                 }
             } else {
                 if (obj.type === 'one') {
-                    for (var i = 0; i < selectedTagIds.length; i++) {
-                        if (selectedTagIds[i] === obj.data.tagId) {
-                            selectedTagIds.remove(i);
+                    for (var i = 0; i < selectedCategoryIds.length; i++) {
+                        if (selectedCategoryIds[i] === obj.data.categoryId) {
+                            selectedCategoryIds.remove(i);
                         }
                     }
                 } else {
-                    selectedTagIds = [];
+                    selectedCategoryIds = [];
                 }
             }
 
             console.log("-->>");
-            console.log(selectedTagIds);
+            console.log(selectedCategoryIds);
         });
 
-        //新增标签
+        //新增类别
 
 
         //数组添加remove方法

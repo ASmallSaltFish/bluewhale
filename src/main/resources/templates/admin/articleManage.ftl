@@ -194,7 +194,7 @@
         //发布文章
         $("#btnPublishArticle").on('click',function () {
             if(selectedArticleIds==null||selectedArticleIds.length==0){
-                layer.msg('请选择想要预览的文章！', {icon: 2});
+                layer.msg('请选择想要发布的文章！', {icon: 2});
                 return false;
             }
             $.ajax({
@@ -218,7 +218,7 @@
         //删除文章
         $("#btnDeleteArticle").on('click',function () {
             if(selectedArticleIds==null||selectedArticleIds.length==0){
-                layer.msg('请选择想要预览的文章！', {icon: 2});
+                layer.msg('请选择想要删除的文章！', {icon: 2});
                 return false;
             }
             alert("您确定要删除选中的文章吗？");
