@@ -17,6 +17,8 @@
         <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP"/>
         <result column="content" property="content" jdbcType="CLOB"/>
         <result column="preview_content" property="previewContent" jdbcType="CLOB"/>
+        <result column="view_count" property="viewCount" jdbcType="VARCHAR"/>
+        <result column="comment_count" property="commentCount" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP"/>
         <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
@@ -30,8 +32,13 @@
         author,
         status,
         personal_flag,
+        category_id,
+        image_cover,
+        description,
         content,
         preview_content,
+        view_count,
+        comment_count,
         create_time,
         create_by,
         last_modify_time,
@@ -41,7 +48,6 @@
     <select id="findList" resultMap="BaseResultMap">
         select * from t_bw_article
     </select>
-
 
     <!-- 文章分页 -->
     <select id="selectArticlePage" resultMap="BaseResultMap">
@@ -73,5 +79,31 @@
     <!-- 文章分页 -->
     <select id="listArticles" resultMap="BaseResultMap">
         select * from t_bw_article a
+        left join t_bw_article_tag art on art.article_id=a.article_id
+        left join t_bw_tag tag on tag.tag_id=art.tag_id
+        <where>
+            1=1
+            <if test="article.tagIds!=null">
+                and tag.tag_id in
+                <foreach collection="article.tagIds" item="tagId" open="(" separator="," close=")">
+                    #{tagId}
+                </foreach>
+            </if>
+
+            <if test="article.categoryIds!=null">
+                and a.category id in
+                <foreach collection="article.categoryIds" item="categoryId" open="(" separator="," close=")">
+                    #{categoryId}
+                </foreach>
+            </if>
+        </where>
+        order by
+        <if test="article.orderBy!=null and article.orderBy=='viewCount'">
+            a.view_count desc,
+        </if>
+        <if test="article.orderBy!=null and article.orderBy=='createTime'">
+            a.create_time desc,
+        </if>
+        a.last_modify_time desc,a.create_time desc
     </select>
 </mapper>

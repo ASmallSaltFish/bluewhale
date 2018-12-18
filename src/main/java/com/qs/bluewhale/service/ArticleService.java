@@ -12,7 +12,11 @@ public interface ArticleService extends IService<Article> {
 
     Page<Article> listArticlesPage(Article article, Page<Article> page);
 
-    Page<Article> listArticlesPage(int pageNum, int pageSize);
+    Page<Article> listArticlesPage(int pageNum, int pageSize, Article article);
 
     Article findArticleById(String articleId);
+
+    int countByUserId(String userId);
+
+    void update(Article article);
 }
