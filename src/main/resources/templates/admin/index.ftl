@@ -102,7 +102,7 @@
                         active[dataType] ? active[dataType].call(this, $this, content) : '';
                     }
                 });
-                active[dataType] ? active[dataType].call(this, $this, content) : '';
+                //active[dataType] ? active[dataType].call(this, $this, content) : '';
             } else if ($this.attr("id") === "tag-manage") {
                 var content;
                 $.ajax({

@@ -39,4 +39,11 @@ public class CategoryInfoServiceImpl extends ServiceImpl<CategoryInfoMapper, Cat
         //queryWrapper.eq("create_by", ExecutionContext.getUserId());
         return new PageInfo<>(list(queryWrapper));
     }
+
+    @Override
+    public CategoryInfo findCategoryById(String categoryId) {
+        QueryWrapper<CategoryInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category_id",categoryId);
+        return getOne(queryWrapper);
+    }
 }

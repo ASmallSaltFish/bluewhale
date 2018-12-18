@@ -12,4 +12,6 @@ public interface CategoryInfoService extends IService<CategoryInfo> {
     List<CategoryInfo> getCategoryInfoList(String userId);
 
     PageInfo<CategoryInfo> listCategoryPage(CategoryInfo categoryInfo, Page<CategoryInfo> page);
+
+    CategoryInfo findCategoryById(String categoryId);
 }

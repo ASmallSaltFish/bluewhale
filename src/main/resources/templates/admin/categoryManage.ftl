@@ -7,9 +7,9 @@
     <button class="layui-btn" data-type="reload" id="search">搜索</button>
 
     <div class="layui-row" style="margin-top: 20px;">
-        <input type="button" class="layui-btn layui-btn-sm" id="btnAddTag" value="新增"/>
-        <input type="button" class="layui-btn layui-btn-sm" id="btnUpdateTag" value="修改"/>
-        <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDeleteTag" value="删除"/>
+        <input type="button" class="layui-btn layui-btn-sm" id="btnAddCategory" value="新增"/>
+        <input type="button" class="layui-btn layui-btn-sm" id="btnUpdateCategory" value="修改"/>
+        <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDeleteCategory" value="删除"/>
     </div>
 
     <div class="layui-tab-content">
@@ -77,7 +77,7 @@
 
         //存储选中行的userId
         var selectedCategoryIds = [];
-        table.on('checkbox(article)', function (obj) {
+        table.on('checkbox(categoryInfo)', function (obj) {
             if (obj.checked === true) {
                 if (obj.type === 'one') {
                     selectedCategoryIds.push(obj.data.categoryId);
@@ -90,7 +90,7 @@
                 if (obj.type === 'one') {
                     for (var i = 0; i < selectedCategoryIds.length; i++) {
                         if (selectedCategoryIds[i] === obj.data.categoryId) {
-                            selectedCategoryIds.remove(i);
+                            selectedCategoryIds.remove(selectedCategoryIds[i]);
                         }
                     }
                 } else {
@@ -103,7 +103,69 @@
         });
 
         //新增类别
+        $("#btnAddCategory").on('click', function () {
+            window.open("${ctx}/category/addCategory");
+        });
 
+        //修改类别
+        $("#btnUpdateCategory").on('click',function () {
+            if (selectedCategoryIds.length == 0) {
+                layer.msg('请选择想要修改的类别！', {icon: 2});
+                return false;
+            }
+            if (selectedCategoryIds.length != 1) {
+                layer.msg('修改时只能选择一条记录！', {icon: 2});
+                return false;
+            }
+
+            var $btn = $("#btnUpdateCategory");
+            $.ajax({
+                url: '${ctx}/category/updateCategory?categoryId=' + selectedCategoryIds[0],
+                type: 'GET',
+                async: true,
+                success: function (data) {
+                    var tabName = "类别-" + $btn.val();
+                    var tabId = $btn.attr("id");
+                    var $tabli = $("li[lay-id='" + tabId + "']");
+                    //如果已经存在
+                    if ($tabli.length === 0) {
+                        //新增一个Tab项
+                        element.tabAdd('mainTb', {
+                            title: tabName,
+                            content: data,
+                            id: tabId
+                        });
+                    }
+
+                    $("li[lay-id='" + tabId + "']").click();
+                }
+            });
+        });
+
+        //删除类别
+        $("#btnDeleteCategory").on('click',function () {
+            if(selectedCategoryIds==null||selectedCategoryIds.length==0){
+                layer.msg('请选择想要删除的类别！', {icon: 2});
+                return false;
+            }
+            alert("您确定要删除选中的类别吗？");
+            $.ajax({
+                type:'POST',
+                url:'${ctx}/category/deleteCategory',
+                contentType: "application/x-www-form-urlencoded",
+                data: {"selectedCategoryIds":selectedCategoryIds},
+                success : function(data) {
+                    console.log(data);
+                    if (data && data.status === "SUCCESS") {
+                        layer.msg('删除成功！', {icon: 1, time: 3000}, function () {
+                            window.location.href = '${ctx}/admin/index';
+                        });
+                    } else {
+                        layer.msg(data.msg || '删除出现错误！', {icon: 2, time: 3000});
+                    }
+                }
+            });
+        });
 
         //数组添加remove方法
         Array.prototype.remove = function (val) {
