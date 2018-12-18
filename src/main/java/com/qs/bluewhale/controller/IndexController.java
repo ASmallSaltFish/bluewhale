@@ -55,7 +55,7 @@ public class IndexController extends BaseController {
     public Map<String, Object> listArticles(HttpServletRequest request, Article article) {
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         int pageSize = Integer.parseInt(request.getParameter("pageSize"));
-        String tagIdStr = request.getParameter("tagIds");
+        String tagIdStr = request.getParameter("tagIdStr");
         if (StringUtils.isNotBlank(tagIdStr)) {
             List<String> tagIds = Arrays.asList(tagIdStr.split(","));
             article.setTagIds(tagIds);

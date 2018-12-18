@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>MyBlog</title>
+    <title>🐳BlueWhale</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <link rel="stylesheet" href="${ctx}/static/css/tagAll.css">
@@ -71,7 +71,7 @@
                 <ul class="layui-tab-title" id="articleOrderNav">
                     <li class="layui-this" data-value="createTime">
                         <a href="javascript:;" class="active">
-                            <i class="layui-icon layui-icon-list"></i>
+                            <i class="layui-icon layui-icon-template-1"></i>
                             时间排序
                         </a>
                     </li>
@@ -86,7 +86,7 @@
         </div>
         <div class="layui-row article-row" style="margin-bottom: 50px;">
             <div class="layui-col-md8 layui-col-sm-12 layui-col-space10">
-                <div id="articleDiv" style="height: 800px;">博客列表在这里啦~~</div>
+                <div id="articleDiv" style="min-height: 800px;">博客列表在这里啦~~</div>
 
                 <#-- 分页 -->
                 <div id="indexPage" style="text-align: center; margin-top: 50px; color: black;"></div>
@@ -183,7 +183,7 @@
             });
 
             console.log("2" + param);
-            param['tagIds'] = tagIds.join(",");
+            param['tagIdStr'] = tagIds.join(",");
             console.log("3" + param);
             loadArticlePage(param);
         });
@@ -222,15 +222,15 @@
                                 '                                                    <span>${(loginUser.userName)!}</span>\n' +
                                 '                                                    &nbsp;\n' +
                                 '                                                    <span style="color: #777">|</span> &nbsp;\n' +
-                                '                                                    <i class="layui-icon layui-icon-read" style="color: orange;"></i>\n' +
+                                '                                                    <i class="fa fa-book" style="color: orange;"></i>\n' +
                                 '                                                    <span>javaScript,java,mysql</span>\n' +
                                 '                                                </div>\n' +
                                 '                                                <div class="layui-col-md4 layui-col-xs6 layui-col-sm6">\n' +
-                                '                                                    <i class="layui-icon layui-icon-praise" style="color: orange;">&nbsp;<span style="color:#777;">' + item["viewCount"] + '</span></i>\n' +
+                                '                                                    <i class="fa fa-eye" style="color: orange;">&nbsp;<span style="color:#777;">' + item["viewCount"] + '</span></i>\n' +
                                 '                                                    &nbsp;\n' +
                                 '                                                    <span style="color: #777">|</span> &nbsp;\n' +
                                 '                                                    <a href="${ctx}/leacots">\n' +
-                                '                                                        <i class="layui-icon layui-icon-dialogue" style="color: orange;">&nbsp;<span style="color:#777;">' + item["commentCount"] + '</span></i>\n' +
+                                '                                                        <i class="layui-icon layui-icon-reply-fill" style="color: orange;">&nbsp;<span style="color:#777;">' + item["commentCount"] + '</span></i>\n' +
                                 '                                                    </a>\n' +
                                 '                                                </div>\n' +
                                 '                                            </div>\n' +
