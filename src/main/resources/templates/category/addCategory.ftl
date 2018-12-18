@@ -35,7 +35,9 @@
 
 <script>
     //加载弹出层组件
-    layui.use(['layer', 'form', 'element'], function () {
+    layui.config({
+        dir: '${ctx}/static/layui/'
+    }).use(['layer', 'form', 'element'], function () {
         var layer = layui.layer;
         var form = layui.form;
         var element = layui.element;

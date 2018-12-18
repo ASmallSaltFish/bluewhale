@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +65,8 @@ public class CategoryInfoController extends BaseController {
             jsonResult.setMsg("参数校验错误！");
             return jsonResult;
         }
-        categoryInfoService.save(categoryInfo);
+        categoryInfo.setLastModifyTime(new Timestamp(new Date().getTime()));
+        categoryInfoService.saveOrUpdate(categoryInfo);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
     }

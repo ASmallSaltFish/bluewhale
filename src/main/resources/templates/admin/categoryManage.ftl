@@ -104,7 +104,29 @@
 
         //新增类别
         $("#btnAddCategory").on('click', function () {
-            window.open("${ctx}/category/addCategory");
+            //window.open("${ctx}/category/addCategory");
+            var $btn = $("#btnAddCategory");
+            $.ajax({
+                url: '${ctx}/category/addCategory',
+                type: 'GET',
+                async: true,
+                success: function (data) {
+                    var tabName = "类别-" + $btn.val();
+                    var tabId = $btn.attr("id");
+                    var $tabli = $("li[lay-id='" + tabId + "']");
+                    //如果已经存在
+                    if ($tabli.length === 0) {
+                        //新增一个Tab项
+                        element.tabAdd('mainTb', {
+                            title: tabName,
+                            content: data,
+                            id: tabId
+                        });
+                    }
+
+                    $("li[lay-id='" + tabId + "']").click();
+                }
+            });
         });
 
         //修改类别
