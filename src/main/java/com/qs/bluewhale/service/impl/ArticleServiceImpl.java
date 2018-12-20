@@ -44,7 +44,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         PageHelper.startPage(pageNum, pageSize);
         Page<Article> articlePage = articleMapper.listArticles(article);
         List<Article> articleList = articlePage.getResult();
-        if(CollectionUtils.isEmpty(articleList)){
+        if (CollectionUtils.isEmpty(articleList)) {
             return articlePage;
         }
 
@@ -58,6 +58,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         for (Article art : articleList) {
             Set<String> tagNameSet = articleIdAndTagNamesMap.get(art.getArticleId());
             art.setTagNames(CollectionUtils.isEmpty(tagNameSet) ? "暂无标签~" : CommonUtil.collectionToString(tagNameSet, ","));
+
+            //获取文章封面
+            String imageCover = art.getImageCover();
+            if (StringUtils.isBlank(imageCover)) {
+                continue;
+            }
+
+            art.setBase64ImageCover(CommonUtil.imageToBase64String(imageCover));
         }
 
         return articlePage;

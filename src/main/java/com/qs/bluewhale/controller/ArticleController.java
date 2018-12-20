@@ -322,9 +322,7 @@ public class ArticleController extends BaseController {
             byte[] buffer = new byte[1024];
             int len = 0;
             while (-1 != (len = inputStream.read(buffer))) {
-                for (int i = 0; i < len; i++) {
-                    outputStream.write(buffer, 0, len);
-                }
+                outputStream.write(buffer, 0, len);
             }
 
             //使用字节输出流

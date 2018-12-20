@@ -87,7 +87,13 @@
         </div>
         <div class="layui-row article-row" style="margin-bottom: 50px;">
             <div class="layui-col-md8 layui-col-sm-12 layui-col-space10">
-                <div id="articleDiv" style="min-height: 800px;">博客列表在这里啦~~</div>
+                <div id="articleDiv" style="min-height: 800px;">
+                    <div style="min-height: 600px; text-align: center;">
+                        <i class="layui-icon layui-icon-loading" style="color: orange;">
+                            正在加载数据，请稍等哟~
+                        </i>
+                    </div>
+                </div>
 
                 <#-- 分页 -->
                 <div id="indexPage" style="text-align: center; margin-top: 50px; color: black;"></div>
@@ -196,6 +202,9 @@
                 // async: false,
                 type: 'POST',
                 dataType: 'JSON',
+                beforeSend: function () {
+
+                },
                 success: function (data) {
                     var articles = data.data;
                     console.log(articles);
@@ -204,7 +213,7 @@
                         layui.each(articles, function (index, item) {
                             contentArr.push('<div style="height:135px; margin: 20px 30px 5px 0px; background-color: #ffffff">\n' +
                                 '                                <div class="layui-col-md4 layui-col-sm6 layui-col-xs6">\n' +
-                                '                                    <img src="' + showImageCover(item['imageCover']) + '" height="130px;" width="95%">\n' +
+                                '                                    <img src="' + showImageCover(item['base64ImageCover']) + '" height="130px;" width="95%">\n' +
                                 '                                </div>\n' +
                                 '                                <div class="layui-col-md8 layui-col-sm6 layui-col-xs6" style="text-align: left;">\n' +
                                 '                                    <div class="layui-row grid-demo">\n' +
@@ -241,11 +250,11 @@
                                 '                            </div>');
                         });
 
-                        if (contentArr) {
+                        if (contentArr && contentArr.length > 0) {
                             return contentArr.join('');
                         }
 
-                        return "暂无数据~";
+                        return '<i class="layui-icon layui-icon-face-cry" style="color: orange;">暂无数据~</li>';
                     });
                 }
             });
@@ -259,22 +268,28 @@
             return desc;
         }
 
-        function showImageCover(imageFilePath) {
+        function showImageCover(base64ImageCover) {
             var imageSrc = "data:image/jpg;base64,";
-            $.ajax({
-                url: '${ctx}/article/showImageCover',
-                data: {imageFilePath: imageFilePath},
-                type: 'POST',
-                async: false,
-                success: function (data) {
-                    console.log(data);
-                    if (data.data) {
-                        imageSrc += data.data;
-                    }else{
-                        imageSrc = "${ctx}/static/images/bg-01.jpg";
-                    }
-                }
-            });
+            <#--$.ajax({-->
+            <#--url: '${ctx}/article/showImageCover',-->
+            <#--data: {imageFilePath: imageFilePath},-->
+            <#--type: 'POST',-->
+            <#--async: false, //同步方式加载-->
+            <#--success: function (data) {-->
+            <#--console.log(data);-->
+            <#--if (data.data) {-->
+            <#--imageSrc += data.data;-->
+            <#--}else{-->
+            <#--imageSrc = "${ctx}/static/images/bg-01.jpg";-->
+            <#--}-->
+            <#--}-->
+            <#--});-->
+
+            if (base64ImageCover) {
+                imageSrc += base64ImageCover;
+            } else {
+                imageSrc = "${ctx}/static/images/bg-01.jpg";
+            }
 
             return imageSrc;
         }

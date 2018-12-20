@@ -75,4 +75,7 @@ public class Article extends SuperEntity<Article> {
 
     @TableField(exist = false)
     private String orderBy;
+
+    @TableField(exist = false)
+    private String base64ImageCover;
 }

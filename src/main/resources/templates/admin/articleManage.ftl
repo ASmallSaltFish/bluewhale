@@ -75,9 +75,9 @@
                 {field: 'status', title: '状态'},
                 {field: 'categoryId', title: '分类'},
                 {field: 'description', title: '描述'},
-                {field: 'createName', title: '创建人'},
+                // {field: 'createName', title: '创建人'},
                 {field: 'createTime', title: '创建时间', templet: "#createTimeTb"},
-                {field: 'lasModifyName', title: '修改人'},
+                // {field: 'lasModifyName', title: '修改人'},
                 {field: 'lastModifyTime', title: '修改时间', templet: "#lastModifyTimeTb"}
             ]],
             id: 'allArticleListTb',
@@ -231,7 +231,7 @@
 
         //删除文章
         $("#btnDeleteArticle").on('click', function () {
-            if (!selectedArticleIds) {
+            if (!selectedArticleIds || selectedArticleIds.length < 1) {
                 layer.msg('请选择想要删除的文章！', {icon: 2});
                 return false;
             }
