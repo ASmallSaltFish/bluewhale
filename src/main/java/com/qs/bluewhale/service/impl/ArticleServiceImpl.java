@@ -7,17 +7,24 @@ import com.github.pagehelper.PageHelper;
 import com.qs.bluewhale.entity.Article;
 import com.qs.bluewhale.mapper.ArticleMapper;
 import com.qs.bluewhale.service.ArticleService;
+import com.qs.bluewhale.service.ArticleTagService;
+import com.qs.bluewhale.utils.CommonUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.*;
 
 @Service("articleService")
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Resource
+    private ArticleTagService articleTagService;
 
     @Override
     public List<Article> findArticlesByUserId(String userId) {
@@ -35,7 +42,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Page<Article> listArticlesPage(int pageNum, int pageSize, Article article) {
         PageHelper.startPage(pageNum, pageSize);
-        return articleMapper.listArticles(article);
+        Page<Article> articlePage = articleMapper.listArticles(article);
+        List<Article> articleList = articlePage.getResult();
+        if(CollectionUtils.isEmpty(articleList)){
+            return articlePage;
+        }
+
+        List<String> articleIds = new ArrayList<>(articleList.size());
+        for (Article art : articleList) {
+            articleIds.add(art.getArticleId());
+        }
+
+        //获取文章的标签
+        Map<String, Set<String>> articleIdAndTagNamesMap = articleTagService.getArticleIdAndTagNamesMap(articleIds);
+        for (Article art : articleList) {
+            Set<String> tagNameSet = articleIdAndTagNamesMap.get(art.getArticleId());
+            art.setTagNames(CollectionUtils.isEmpty(tagNameSet) ? "暂无标签~" : CommonUtil.collectionToString(tagNameSet, ","));
+        }
+
+        return articlePage;
     }
 
     @Override
@@ -66,6 +91,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("article_id", articleId);
         update(article, queryWrapper);
+    }
+
+    @Override
+    public void deleteByArticleIds(List<String> articleId) {
+        articleMapper.deleteByArticleIds(articleId);
     }
 
 

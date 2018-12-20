@@ -21,11 +21,17 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">文章标题</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="title" required lay-verify="required" placeholder="取个名字吧~"
+                        <input type="text" name="title" value="${(article.title)!}" required lay-verify="required"
                                autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
                         <button class="layui-btn" type="button" id="btnSave">保存</button>
+                    </div>
+
+                    <div class="layui-input-inline">
+                        <button type="button" class="layui-btn" name="imageFile" id="uploadImgFile">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
                     </div>
                 </div>
             </form>
@@ -45,11 +51,12 @@
 
 <script>
     //加载弹出层组件
-    layui.use(['layer', 'form', 'element'], function () {
+    layui.use(['layer', 'form', 'element', 'upload'], function () {
         var layer = layui.layer;
         var form = layui.form;
         var element = layui.element;
         var $ = layui.$;
+        var upload = layui.upload;
 
         var editor = editormd("test-editormd", {
             width: "90%",
@@ -65,6 +72,35 @@
             }
         });
 
+        //上传选择文件，点击确定是上传
+        var uploadInst = upload.render({
+            elem: '#uploadImgFile',
+            url: '${ctx}/article/uploadImgFile?articleId=${(article.articleId)!}',
+            // auto: false,  //选择文件后不自动上传
+            // bindAction: "#btnEnter",  //指定按钮点击触发上传
+            field: 'uploadImgFile',
+            acceptMime: 'image/*',
+            choose: function (obj) {
+                console.log(obj);
+                var file = obj.pushFile();
+                console.log(file);
+            },
+            done: function (res) {
+                console.log(res);
+                if (res && res.status === "SUCCESS") {
+                    layer.msg('保存成功！', {icon: 1, time: 3000});
+                    $("#uploadImgFile").addClass("layui-btn-disabled");
+                } else {
+                    layer.msg(data.msg || '保存出现错误！', {icon: 2, time: 3000});
+                }
+            },
+            error: function () {
+                //请求异常回调
+                console.log("上传失败！");
+                layer.msg(data.msg || '保存出现错误！', {icon: 2, time: 3000});
+            }
+        });
+
         //保存文章
         $("#btnSave").on('click', function () {
             var $articleForm = $("#articleForm");
@@ -72,12 +108,13 @@
             var content = editor.getValue();
             var previewContent = editor.getPreviewedHTML();
             var param = {
+                'articleId': "${(article.articleId)!}",
                 'title': title,
                 'content': content,
                 'previewContent': previewContent
             };
 
-            $.post('${ctx}/article/saveArticle', param, function (data) {
+            $.post('${ctx}/article/updateArticle', param, function (data) {
                 if (data && data.status === "SUCCESS") {
                     layer.msg('保存成功！', {icon: 1, time: 3000}, function () {
                         window.location.href = '${ctx}/admin/index';

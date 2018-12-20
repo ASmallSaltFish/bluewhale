@@ -6,6 +6,7 @@ import com.qs.bluewhale.entity.*;
 import com.qs.bluewhale.entity.enums.ArticlePersonalFlagEnum;
 import com.qs.bluewhale.entity.enums.ArticleStatusEnum;
 import com.qs.bluewhale.mapper.ArticleMapper;
+import com.qs.bluewhale.mapper.ArticleTagMapper;
 import com.qs.bluewhale.mapper.UserRoleMapper;
 import com.qs.bluewhale.service.*;
 import com.test.BaseTest;
@@ -14,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TestMp extends BaseTest {
 
@@ -42,6 +40,9 @@ public class TestMp extends BaseTest {
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Autowired
+    private ArticleTagMapper articleTagMapper;
 
     @Test
     public void test() {
@@ -95,7 +96,7 @@ public class TestMp extends BaseTest {
         for (int i = 0; i < 200; i++) {
             Article article = new Article();
             article.setAuthor("qinyupeng");
-            article.setTitle("这是标题" + (i+1));
+            article.setTitle("这是标题" + (i + 1));
             article.setContent("这是markdown正文");
             article.setPreviewContent("这是markdown预览正文");
             article.setDescription("这个是描述");
@@ -120,7 +121,7 @@ public class TestMp extends BaseTest {
 
 
     @Test
-    public void saveTags(){
+    public void saveTags() {
         List<TagInfo> tagInfos = new ArrayList<>();
         TagInfo tagInfo = new TagInfo();
         tagInfo.setTagName("mysql");
@@ -140,7 +141,6 @@ public class TestMp extends BaseTest {
         tagInfo3.setCreateBy("1069915463289114625");
         tagInfo3.setLastModifyBy("1069915463289114625");
         tagInfos.add(tagInfo3);
-
 
 
         TagInfo tagInfo4 = new TagInfo();
@@ -164,5 +164,12 @@ public class TestMp extends BaseTest {
         tagInfos.add(tagInfo6);
 
         tagInfoService.saveBatch(tagInfos);
+    }
+
+
+    @Test
+    public void testfindArticleTagListByArticleIds(){
+        List<ArticleTag> articleTagList = articleTagMapper.findArticleTagListByArticleIds(Collections.singletonList("1075648162284957697"));
+        System.out.println(articleTagList);
     }
 }

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>🐳BlueWhale</title>
+    <title>BlueWhale</title>
+    <link rel="icon" type="image/x-icon" href="${ctx}/static/favicon.ico">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <link rel="stylesheet" href="${ctx}/static/css/tagAll.css">
@@ -192,7 +193,7 @@
             $.ajax({
                 url: '${ctx}/listArticles',
                 data: param,
-                async: false,
+                // async: false,
                 type: 'POST',
                 dataType: 'JSON',
                 success: function (data) {
@@ -203,7 +204,7 @@
                         layui.each(articles, function (index, item) {
                             contentArr.push('<div style="height:135px; margin: 20px 30px 5px 0px; background-color: #ffffff">\n' +
                                 '                                <div class="layui-col-md4 layui-col-sm6 layui-col-xs6">\n' +
-                                '                                    <img src="./static/images/bg-01.jpg" height="130px;" width="95%">\n' +
+                                '                                    <img src="' + showImageCover(item['imageCover']) + '" height="130px;" width="95%">\n' +
                                 '                                </div>\n' +
                                 '                                <div class="layui-col-md8 layui-col-sm6 layui-col-xs6" style="text-align: left;">\n' +
                                 '                                    <div class="layui-row grid-demo">\n' +
@@ -213,7 +214,7 @@
                                 '                                            </h2>\n' +
                                 '                                        </div>\n' +
                                 '                                        <div class="layui-col-md12" style=" height:80px; overflow: hidden;">\n' +
-                                '                                            ' + item["description"] + '\n' +
+                                '                                            ' + getArticleDescription(item["description"]) + '\n' +
                                 '                                        </div>\n' +
                                 '                                        <div class="layui-col-md12" style="line-height: 25px;">\n' +
                                 '                                            <div class="layui-row">\n' +
@@ -223,7 +224,7 @@
                                 '                                                    &nbsp;\n' +
                                 '                                                    <span style="color: #777">|</span> &nbsp;\n' +
                                 '                                                    <i class="fa fa-book" style="color: orange;"></i>\n' +
-                                '                                                    <span>javaScript,java,mysql</span>\n' +
+                                '                                                    <span>' + item["tagNames"] + '</span>\n' +
                                 '                                                </div>\n' +
                                 '                                                <div class="layui-col-md4 layui-col-xs6 layui-col-sm6">\n' +
                                 '                                                    <i class="fa fa-eye" style="color: orange;">&nbsp;<span style="color:#777;">' + item["viewCount"] + '</span></i>\n' +
@@ -248,6 +249,34 @@
                     });
                 }
             });
+        }
+
+        function getArticleDescription(desc) {
+            if (!desc) {
+                return "暂无简介哟~";
+            }
+
+            return desc;
+        }
+
+        function showImageCover(imageFilePath) {
+            var imageSrc = "data:image/jpg;base64,";
+            $.ajax({
+                url: '${ctx}/article/showImageCover',
+                data: {imageFilePath: imageFilePath},
+                type: 'POST',
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.data) {
+                        imageSrc += data.data;
+                    }else{
+                        imageSrc = "${ctx}/static/images/bg-01.jpg";
+                    }
+                }
+            });
+
+            return imageSrc;
         }
     })
 </script>

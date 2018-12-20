@@ -26,6 +26,12 @@
                     <div class="layui-input-inline">
                         <button class="layui-btn" type="button" id="btnSave">保存</button>
                     </div>
+
+                    <div class="layui-input-inline">
+                        <button type="button" class="layui-btn" name="imageFile" id="uploadImgFile">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -47,6 +53,7 @@
         var form = layui.form;
         var element = layui.element;
         var $ = layui.$;
+        var upload = layui.upload;
 
         var editor = editormd("test-editormd", {
             width: "90%",
@@ -62,15 +69,44 @@
             }
         });
 
+        //上传选择文件，点击确定是上传
+        var uploadInst = upload.render({
+            elem: '#uploadImgFile',
+            url: '${ctx}/article/uploadImgFile?articleId=${(article.articleId)!}',
+            // auto: false,  //选择文件后不自动上传
+            // bindAction: "#btnEnter",  //指定按钮点击触发上传
+            field: 'uploadImgFile',
+            acceptMime: 'image/*',
+            choose: function (obj) {
+                console.log(obj);
+                var file = obj.pushFile();
+                console.log(file);
+            },
+            done: function (res) {
+                console.log(res);
+                if (res && res.status === "SUCCESS") {
+                    layer.msg('保存成功！', {icon: 1, time: 3000});
+                    $("#uploadImgFile").addClass("layui-btn-disabled");
+                } else {
+                    layer.msg(data.msg || '保存出现错误！', {icon: 2, time: 3000});
+                }
+            },
+            error: function () {
+                //请求异常回调
+                console.log("上传失败！");
+                layer.msg(data.msg || '保存出现错误！', {icon: 2, time: 3000});
+            }
+        });
+
         //保存文章
         $("#btnSave").on('click', function () {
             var $articleForm = $("#articleForm");
-            var articleId=$articleForm.find("input[name='articleId']").val();
+            var articleId = $articleForm.find("input[name='articleId']").val();
             var title = $articleForm.find("input[name='title']").val();
             var content = editor.getValue();
             var previewContent = editor.getPreviewedHTML();
             var param = {
-                'articleId':articleId,
+                'articleId': articleId,
                 'title': title,
                 'content': content,
                 'previewContent': previewContent
@@ -81,7 +117,7 @@
                     layer.msg('更新成功！', {icon: 1, time: 3000}, function () {
                         if ("${(refer)!}" === "edit") {
                             console.log("小窗口编辑，不用跳转的~");
-                        }else{
+                        } else {
                             window.location.href = '${ctx}/admin/index';
                         }
                     });

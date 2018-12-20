@@ -1,5 +1,6 @@
 <script src="${ctx}/static/js/pace.mini.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/themes/blue/pace-theme-minimal.css">
+<link rel="icon" type="image/x-icon" href="${ctx}/static/favicon.ico">
 
 <style>
     .layui-nav-item {
