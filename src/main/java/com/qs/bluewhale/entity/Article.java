@@ -8,6 +8,7 @@ import com.qs.bluewhale.entity.base.SuperEntity;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @TableName("t_bw_article")
@@ -38,6 +39,11 @@ public class Article extends SuperEntity<Article> {
 
     private Date publishDate;
 
+    //预览数
+    private int viewCount;
+
+    //评论数
+    private int commentCount;
 
     /*************非持久化字段*******************/
     @TableField(exist = false)
@@ -54,4 +60,13 @@ public class Article extends SuperEntity<Article> {
 
     @TableField(exist = false)
     private String lasModifyName;
+
+    @TableField(exist = false)
+    private List<String> tagIds;
+
+    @TableField(exist = false)
+    private List<String> categoryIds;
+
+    @TableField(exist = false)
+    private String orderBy;
 }

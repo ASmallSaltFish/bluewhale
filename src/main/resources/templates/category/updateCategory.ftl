@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>写博客啦~</title>
+    <title>类别修改</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
-
 </head>
 
 <body>
@@ -17,9 +16,11 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">类别名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="categoryName" required lay-verify="required" value="${(categoryInfo.categoryName)!}"
+                        <input type="text" name="categoryName" required lay-verify="required"
+                               value="${(categoryInfo.categoryName)!}"
                                autocomplete="off" class="layui-input">
-                        <input type="text" name="categoryId" style="display: none;" value="${(categoryInfo.categoryId)!}">
+                        <input type="text" name="categoryId" style="display: none;"
+                               value="${(categoryInfo.categoryId)!}">
                     </div>
                     <div class="layui-input-inline">
                         <button class="layui-btn" type="button" id="btnSave">保存</button>
@@ -50,7 +51,7 @@
             var categoryName = $articleForm.find("input[name='categoryName']").val();
             var categoryId = $articleForm.find("input[name='categoryId']").val();
             var param = {
-                'categoryId':categoryId,
+                'categoryId': categoryId,
                 'categoryName': categoryName
             };
 

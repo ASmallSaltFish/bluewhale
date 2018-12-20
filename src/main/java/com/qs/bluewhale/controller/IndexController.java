@@ -8,6 +8,7 @@ import com.qs.bluewhale.entity.TagInfo;
 import com.qs.bluewhale.service.ArticleService;
 import com.qs.bluewhale.service.TagInfoService;
 import com.qs.bluewhale.utils.ExecutionContext;
+import com.qs.bluewhale.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +40,9 @@ public class IndexController extends BaseController {
         }
 
         List<TagInfo> tagInfoList = tagInfoService.getTagInfoList(userId);
+        int count = articleService.countByUserId(userId);
         model.addAttribute("tagInfoList", tagInfoList);
+        model.addAttribute("count", count);
         return "/index/index";
     }
 
@@ -48,14 +52,23 @@ public class IndexController extends BaseController {
      */
     @RequestMapping(value = "/listArticles")
     @ResponseBody
-    public Map<String, Object> listArticles(int pageNum, int pageSize) {
-        Page<Article> articlePage = articleService.listArticlesPage(pageNum, pageSize);
-        PageInfo<Article> pageInfo = new PageInfo<>(articlePage);
-        Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("count", pageInfo.getTotal());
-        dataMap.put("data", pageInfo.getList());
-        dataMap.put("code", 0);
-        return dataMap;
+    public Map<String, Object> listArticles(HttpServletRequest request, Article article) {
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+        int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+        String tagIdStr = request.getParameter("tagIdStr");
+        if (StringUtils.isNotBlank(tagIdStr)) {
+            List<String> tagIds = Arrays.asList(tagIdStr.split(","));
+            article.setTagIds(tagIds);
+        }
+
+        String categoryIdStr = request.getParameter("categoryIds");
+        if (StringUtils.isNotBlank(categoryIdStr)) {
+            List<String> categoryIds = Arrays.asList(categoryIdStr.split(","));
+            article.setCategoryIds(categoryIds);
+        }
+
+        Page<Article> articlePage = articleService.listArticlesPage(pageNum, pageSize, article);
+        return PageUtils.wrapPageDataToMap(new PageInfo<>(articlePage));
     }
 
     @GetMapping(value = "/about")

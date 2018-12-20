@@ -81,12 +81,12 @@ public class ArticleController extends BaseController {
                     User user2 = userService.findUserByUserId(a.getLastModifyBy());
                     a.setLasModifyName(user2.getUserName());
                 }
-                if (StringUtils.isNotBlank(a.getStatus())){
-                    if (ArticleStatusEnum.PUBLIAHED.getCode().equals(a.getStatus())){
+                if (StringUtils.isNotBlank(a.getStatus())) {
+                    if (ArticleStatusEnum.PUBLIAHED.getCode().equals(a.getStatus())) {
                         a.setStatus(ArticleStatusEnum.PUBLIAHED.getDesc());
-                    }else if (ArticleStatusEnum.DRAFTED.getCode().equals(a.getStatus())){
+                    } else if (ArticleStatusEnum.DRAFTED.getCode().equals(a.getStatus())) {
                         a.setStatus(ArticleStatusEnum.DRAFTED.getDesc());
-                    }else if (ArticleStatusEnum.DELETED.getCode().equals(a.getStatus())){
+                    } else if (ArticleStatusEnum.DELETED.getCode().equals(a.getStatus())) {
                         a.setStatus(ArticleStatusEnum.DELETED.getDesc());
                     }
                 }
@@ -155,18 +155,18 @@ public class ArticleController extends BaseController {
             jsonResult.setMsg("参数校验错误！");
             return jsonResult;
         }
-        List<String> asList=Arrays.asList(articleIds); //将数组转换为List集合
-        List<Article> articleList= (List<Article>) articleService.listByIds(asList); //批量查找
-        for(Article article:articleList){
-            //Article article=articleService.findArticleById(articleIds[i]);
+        List<Article> articles=new ArrayList<>();
+        for(int i=0;i<articleIds.length;i++){
+            Article article=articleService.findArticleById(articleIds[i]);
             if (ArticleStatusEnum.PUBLIAHED.getCode().equals(article.getStatus())){
                 jsonResult.setMsg("选中的文章包含已发布文章！");
                 return jsonResult;
             }
             article.setStatus(ArticleStatusEnum.PUBLIAHED.getCode());
             article.setLastModifyTime(new Timestamp(new Date().getTime()));
+            articles.add(article);
         }
-        articleService.updateBatchById(articleList);
+        articleService.updateBatchById(articles);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
     }

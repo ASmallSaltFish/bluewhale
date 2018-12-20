@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.qs.bluewhale.entity.Article;
 import com.qs.bluewhale.mapper.ArticleMapper;
 import com.qs.bluewhale.service.ArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<Article> findArticlesByUserId(String userId) {
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("create_by",userId);
+        queryWrapper.eq("create_by", userId);
         return list(queryWrapper);
     }
 
@@ -32,16 +33,39 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public Page<Article> listArticlesPage(int pageNum, int pageSize) {
+    public Page<Article> listArticlesPage(int pageNum, int pageSize, Article article) {
         PageHelper.startPage(pageNum, pageSize);
-        return articleMapper.listArticles();
+        return articleMapper.listArticles(article);
     }
 
     @Override
     public Article findArticleById(String articleId) {
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("article_id",articleId);
+        queryWrapper.eq("article_id", articleId);
         return getOne(queryWrapper);
+    }
+
+    @Override
+    public int countByUserId(String userId) {
+        if (StringUtils.isBlank(userId)) {
+            throw new RuntimeException("param userId is null or empty");
+        }
+
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("create_by", userId);
+        return count(queryWrapper);
+    }
+
+    @Override
+    public void update(Article article) {
+        String articleId = article.getArticleId();
+        if (StringUtils.isBlank(articleId)) {
+            throw new RuntimeException("param articleId is null or empty");
+        }
+
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("article_id", articleId);
+        update(article, queryWrapper);
     }
 
 

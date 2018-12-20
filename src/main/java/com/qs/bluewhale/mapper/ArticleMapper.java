@@ -9,5 +9,5 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     Page<Article> selectArticlePage(@Param("article") Article article);
 
-    Page<Article> listArticles();
+    Page<Article> listArticles(@Param("article") Article article);
 }

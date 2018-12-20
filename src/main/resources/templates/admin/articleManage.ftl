@@ -17,7 +17,8 @@
     发布时间：
     <div class="layui-form layui-inline" style="margin-right: 10px;">
         <div class="layui-inline">
-            <input type="text" name="article.publishStartDate" id="publishStartDate" class="layui-input" id="publishStartDate">
+            <input type="text" name="article.publishStartDate" id="publishStartDate" class="layui-input"
+                   id="publishStartDate">
         </div>
         -
         <div class="layui-inline">
@@ -32,7 +33,7 @@
 
     <div class="layui-row" style="margin-top: 20px;">
         <input type="button" class="layui-btn layui-btn-sm" id="btnAddArticle" value="新增"/>
-        <input type="button" class="layui-btn layui-btn-sm" id="btnPreviewArticle" value="预览/修改" />
+        <input type="button" class="layui-btn layui-btn-sm" id="btnPreviewArticle" value="预览/修改"/>
         <#--<button class="layui-btn layui-btn-sm" id="btnUpdateArticle">修改</button>-->
         <input type="button" class="layui-btn layui-btn-sm" id="btnPublishArticle" value="发布"/>
         <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDeleteArticle" value="删除"/>
@@ -192,17 +193,17 @@
         });
 
         //发布文章
-        $("#btnPublishArticle").on('click',function () {
-            if(selectedArticleIds==null||selectedArticleIds.length==0){
+        $("#btnPublishArticle").on('click', function () {
+            if (selectedArticleIds == null || selectedArticleIds.length == 0) {
                 layer.msg('请选择想要发布的文章！', {icon: 2});
                 return false;
             }
             $.ajax({
-                type:'POST',
-                url:'${ctx}/article/publishArticle',
+                type: 'POST',
+                url: '${ctx}/article/publishArticle',
                 contentType: "application/x-www-form-urlencoded",
-                data: {"selectedArticleIds":selectedArticleIds},
-                success : function(data) {
+                data: {"selectedArticleIds": selectedArticleIds},
+                success: function (data) {
                     console.log(data);
                     if (data && data.status === "SUCCESS") {
                         layer.msg('发布成功！', {icon: 1, time: 3000}, function () {
@@ -216,18 +217,18 @@
         });
 
         //删除文章
-        $("#btnDeleteArticle").on('click',function () {
-            if(selectedArticleIds==null||selectedArticleIds.length==0){
+        $("#btnDeleteArticle").on('click', function () {
+            if (selectedArticleIds == null || selectedArticleIds.length == 0) {
                 layer.msg('请选择想要删除的文章！', {icon: 2});
                 return false;
             }
             alert("您确定要删除选中的文章吗？");
             $.ajax({
-                type:'POST',
-                url:'${ctx}/article/deleteArticle',
+                type: 'POST',
+                url: '${ctx}/article/deleteArticle',
                 contentType: "application/x-www-form-urlencoded",
-                data: {"selectedArticleIds":selectedArticleIds},
-                success : function(data) {
+                data: {"selectedArticleIds": selectedArticleIds},
+                success: function (data) {
                     console.log(data);
                     if (data && data.status === "SUCCESS") {
                         layer.msg('删除成功！', {icon: 1, time: 3000}, function () {
