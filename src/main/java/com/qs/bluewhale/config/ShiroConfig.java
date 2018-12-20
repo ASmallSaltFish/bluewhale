@@ -144,6 +144,8 @@ public class ShiroConfig {
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdCookieEnabled(true); //默认开启
+        sessionManager.setSessionIdCookie(this.sessionIdCookie());
+        sessionManager.setSessionDAO(this.sessionDAO());
         return sessionManager;
     }
 
