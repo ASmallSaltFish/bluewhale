@@ -73,7 +73,7 @@
                 {field: 'title', title: '标题'},
                 {field: 'author', title: '作者'},
                 {field: 'status', title: '状态'},
-                {field: 'categoryId', title: '分类'},
+                {field: 'categoryNames', title: '分类'},
                 {field: 'description', title: '描述'},
                 // {field: 'createName', title: '创建人'},
                 {field: 'createTime', title: '创建时间', templet: "#createTimeTb"},

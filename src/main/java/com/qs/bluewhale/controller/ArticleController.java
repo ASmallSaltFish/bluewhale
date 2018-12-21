@@ -105,14 +105,14 @@ public class ArticleController extends BaseController {
         Page<Article> articlePage = articleService.listArticlesPage(article, page);
         if (articlePage.getResult() != null && articlePage.getResult().size() != 0) {
             for (Article a : articlePage.getResult()) {
-                if (StringUtils.isNotBlank(a.getCreateBy())) {
+                /*if (StringUtils.isNotBlank(a.getCreateBy())) {
                     User user1 = userService.findUserByUserId(a.getCreateBy());
                     a.setCreateName(user1.getUserName());
                 }
                 if (StringUtils.isNotBlank(a.getLastModifyBy())) {
                     User user2 = userService.findUserByUserId(a.getLastModifyBy());
                     a.setLasModifyName(user2.getUserName());
-                }
+                }*/
                 if (StringUtils.isNotBlank(a.getStatus())) {
                     if (ArticleStatusEnum.PUBLIAHED.getCode().equals(a.getStatus())) {
                         a.setStatus(ArticleStatusEnum.PUBLIAHED.getDesc());
@@ -121,6 +121,10 @@ public class ArticleController extends BaseController {
                     } else if (ArticleStatusEnum.DELETED.getCode().equals(a.getStatus())) {
                         a.setStatus(ArticleStatusEnum.DELETED.getDesc());
                     }
+                }
+                if (StringUtils.isNotBlank(a.getCategoryId())) {
+                    CategoryInfo categoryInfo = categoryInfoService.findCategoryById(a.getCategoryId());
+                    a.setCategoryNames(categoryInfo.getCategoryName());
                 }
             }
         }
