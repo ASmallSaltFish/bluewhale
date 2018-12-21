@@ -27,7 +27,8 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        article_id,
+        article_id
+        ,
         title,
         author,
         status,
@@ -46,7 +47,8 @@
     </sql>
 
     <select id="findList" resultMap="BaseResultMap">
-        select * from t_bw_article
+        select *
+        from t_bw_article
     </select>
 
     <!-- 文章分页 -->
@@ -55,6 +57,10 @@
         select * from t_bw_article a
         <where>
             1=1
+            <if test="article.status!=null">
+                and a.status=#{article.status}
+            </if>
+
             <if test="article.keyword!=null and article.keyword!=''">
                 and (
                 a.title like #{keyword} or
@@ -62,12 +68,15 @@
                 a.description like #{keyword}
                 )
             </if>
-            <if test="article.personalFlag!=null and article.personalFlag!=''">
+
+            <if test="article.personalFlag!=null">
                 and a.personal_flag=#{article.personalFlag}
             </if>
+
             <if test="article.publishStartDate!=null and article.publishStartDate!=''">
                 <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')>= DATE_FORMAT(#{article.publishStartDate}, '%Y-%m-%d') ]]>
             </if>
+
             <if test="article.publishEndDate!=null and article.publishEndDate!=''">
                 <![CDATA[ and DATE_FORMAT(a.publish_date, '%Y-%m-%d')<= DATE_FORMAT(#{article.publishEndDate}, '%Y-%m-%d') ]]>
             </if>
@@ -76,13 +85,13 @@
     </select>
 
 
-    <!-- 文章分页 -->
+    <!-- 首页文章分页 -->
     <select id="listArticles" resultMap="BaseResultMap">
         select * from t_bw_article a
         left join t_bw_article_tag art on art.article_id=a.article_id
         left join t_bw_tag tag on tag.tag_id=art.tag_id
         <where>
-            1=1
+            status='1'
             <if test="article.tagIds!=null">
                 and tag.tag_id in
                 <foreach collection="article.tagIds" item="tagId" open="(" separator="," close=")">
@@ -106,4 +115,12 @@
         </if>
         a.last_modify_time desc,a.create_time desc
     </select>
+
+    <!-- 假删除-更新为删除状态 -->
+    <update id="deleteByArticleIds">
+        update t_bw_article set status='2' where article_id in
+        <foreach collection="articleIds" item="articleId" open="(" separator="," close=")">
+            #{articleId}
+        </foreach>
+    </update>
 </mapper>

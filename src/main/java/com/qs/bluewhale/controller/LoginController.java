@@ -67,6 +67,6 @@ public class LoginController extends BaseController {
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "login";
+        return "/index/login";
     }
 }

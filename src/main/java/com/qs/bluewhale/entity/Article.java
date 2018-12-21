@@ -65,8 +65,17 @@ public class Article extends SuperEntity<Article> {
     private List<String> tagIds;
 
     @TableField(exist = false)
+    private String tagNames;
+
+    @TableField(exist = false)
     private List<String> categoryIds;
 
     @TableField(exist = false)
+    private String categoryNames;
+
+    @TableField(exist = false)
     private String orderBy;
+
+    @TableField(exist = false)
+    private String base64ImageCover;
 }

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>🐳BlueWhale</title>
+    <title>BlueWhale</title>
+    <link rel="icon" type="image/x-icon" href="${ctx}/static/favicon.ico">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/main.css">
     <link rel="stylesheet" href="${ctx}/static/css/tagAll.css">
@@ -86,7 +87,13 @@
         </div>
         <div class="layui-row article-row" style="margin-bottom: 50px;">
             <div class="layui-col-md8 layui-col-sm-12 layui-col-space10">
-                <div id="articleDiv" style="min-height: 800px;">博客列表在这里啦~~</div>
+                <div id="articleDiv" style="min-height: 800px;">
+                    <div style="min-height: 600px; text-align: center;">
+                        <i class="layui-icon layui-icon-loading" style="color: orange;">
+                            正在加载数据，请稍等哟~
+                        </i>
+                    </div>
+                </div>
 
                 <#-- 分页 -->
                 <div id="indexPage" style="text-align: center; margin-top: 50px; color: black;"></div>
@@ -192,9 +199,12 @@
             $.ajax({
                 url: '${ctx}/listArticles',
                 data: param,
-                async: false,
+                // async: false,
                 type: 'POST',
                 dataType: 'JSON',
+                beforeSend: function () {
+
+                },
                 success: function (data) {
                     var articles = data.data;
                     console.log(articles);
@@ -203,7 +213,7 @@
                         layui.each(articles, function (index, item) {
                             contentArr.push('<div style="height:135px; margin: 20px 30px 5px 0px; background-color: #ffffff">\n' +
                                 '                                <div class="layui-col-md4 layui-col-sm6 layui-col-xs6">\n' +
-                                '                                    <img src="./static/images/bg-01.jpg" height="130px;" width="95%">\n' +
+                                '                                    <img src="' + showImageCover(item['base64ImageCover']) + '" height="130px;" width="95%">\n' +
                                 '                                </div>\n' +
                                 '                                <div class="layui-col-md8 layui-col-sm6 layui-col-xs6" style="text-align: left;">\n' +
                                 '                                    <div class="layui-row grid-demo">\n' +
@@ -213,7 +223,7 @@
                                 '                                            </h2>\n' +
                                 '                                        </div>\n' +
                                 '                                        <div class="layui-col-md12" style=" height:80px; overflow: hidden;">\n' +
-                                '                                            ' + item["description"] + '\n' +
+                                '                                            ' + getArticleDescription(item["description"]) + '\n' +
                                 '                                        </div>\n' +
                                 '                                        <div class="layui-col-md12" style="line-height: 25px;">\n' +
                                 '                                            <div class="layui-row">\n' +
@@ -223,7 +233,7 @@
                                 '                                                    &nbsp;\n' +
                                 '                                                    <span style="color: #777">|</span> &nbsp;\n' +
                                 '                                                    <i class="fa fa-book" style="color: orange;"></i>\n' +
-                                '                                                    <span>javaScript,java,mysql</span>\n' +
+                                '                                                    <span>' + item["tagNames"] + '</span>\n' +
                                 '                                                </div>\n' +
                                 '                                                <div class="layui-col-md4 layui-col-xs6 layui-col-sm6">\n' +
                                 '                                                    <i class="fa fa-eye" style="color: orange;">&nbsp;<span style="color:#777;">' + item["viewCount"] + '</span></i>\n' +
@@ -240,14 +250,48 @@
                                 '                            </div>');
                         });
 
-                        if (contentArr) {
+                        if (contentArr && contentArr.length > 0) {
                             return contentArr.join('');
                         }
 
-                        return "暂无数据~";
+                        return '<i class="layui-icon layui-icon-face-cry" style="color: orange;">暂无数据~</li>';
                     });
                 }
             });
+        }
+
+        function getArticleDescription(desc) {
+            if (!desc) {
+                return "暂无简介哟~";
+            }
+
+            return desc;
+        }
+
+        function showImageCover(base64ImageCover) {
+            var imageSrc = "data:image/jpg;base64,";
+            <#--$.ajax({-->
+            <#--url: '${ctx}/article/showImageCover',-->
+            <#--data: {imageFilePath: imageFilePath},-->
+            <#--type: 'POST',-->
+            <#--async: false, //同步方式加载-->
+            <#--success: function (data) {-->
+            <#--console.log(data);-->
+            <#--if (data.data) {-->
+            <#--imageSrc += data.data;-->
+            <#--}else{-->
+            <#--imageSrc = "${ctx}/static/images/bg-01.jpg";-->
+            <#--}-->
+            <#--}-->
+            <#--});-->
+
+            if (base64ImageCover) {
+                imageSrc += base64ImageCover;
+            } else {
+                imageSrc = "${ctx}/static/images/bg-01.jpg";
+            }
+
+            return imageSrc;
         }
     })
 </script>

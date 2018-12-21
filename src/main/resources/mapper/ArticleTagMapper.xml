@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.bluewhale.mapper.ArticleTagMapper">
+    <!--
+      定义实体属性和数据库字段之间映射对应关系
+      jdbcType属性：org.apache.ibatis.type.JdbcType类中定义的枚举，需要大写
+  -->
+    <resultMap id="BaseResultMap" type="com.qs.bluewhale.entity.ArticleTag">
+        <id column="article_tag_id" property="articleTagId" jdbcType="VARCHAR"/>
+        <result column="tag_id" property="tagId" jdbcType="VARCHAR"/>
+        <result column="article_id" property="articleId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="last_modify_by" property="lastModifyBy" jdbcType="VARCHAR"/>
+
+        <!-- 可以直接关联属性 -->
+        <result column="tag_name" property="tagName"/>
+
+        <!-- 关联文章表 -->
+        <association property="article" javaType="com.qs.bluewhale.entity.Article">
+            <id column="article_id" property="articleId"/>
+        </association>
+
+        <!-- 关联标签表 -->
+        <association property="tagInfo" javaType="com.qs.bluewhale.entity.TagInfo">
+            <result column="tag_name" property="tagName"/>
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        article_tag_id,
+        tag_id,
+        article_id,
+        create_time,
+        create_by,
+        last_modify_time,
+        last_modify_by
+    </sql>
+
+
+    <select id="findArticleTagListByArticleIds" resultMap="BaseResultMap">
+        select t.tag_name,atg.article_id,atg.tag_id from t_bw_article_tag atg
+        left join t_bw_tag t on t.tag_id=atg.tag_id
+        where atg.article_id in
+        <foreach collection="articleIds" item="articleId" open="(" separator="," close=")">
+            #{articleId}
+        </foreach>
+    </select>
+</mapper>

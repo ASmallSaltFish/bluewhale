@@ -54,7 +54,7 @@
     //加载弹出层组件
     layui.config({
         dir: '${ctx}/static/layui/'
-    }).use(['layer', 'form', 'element', 'table'], function () {
+    }).use(['layer', 'form', 'element', 'table', 'upload'], function () {
         var layer = layui.layer;
         var form = layui.form;
         var element = layui.element;
@@ -75,9 +75,9 @@
                 {field: 'status', title: '状态'},
                 {field: 'categoryId', title: '分类'},
                 {field: 'description', title: '描述'},
-                {field: 'createName', title: '创建人'},
+                // {field: 'createName', title: '创建人'},
                 {field: 'createTime', title: '创建时间', templet: "#createTimeTb"},
-                {field: 'lasModifyName', title: '修改人'},
+                // {field: 'lasModifyName', title: '修改人'},
                 {field: 'lastModifyTime', title: '修改时间', templet: "#lastModifyTimeTb"}
             ]],
             id: 'allArticleListTb',
@@ -153,7 +153,19 @@
 
         //新增文章
         $("#btnAddArticle").on('click', function () {
-            window.open("${ctx}/article/addArticle");
+            <#--window.open("${ctx}/article/addArticle");-->
+            //新增人员
+            layer.open({
+                title: '新增文章',
+                type: 2,
+                anim: 1,
+                area: ['500px', '600px'],
+                content: '${ctx}/article/addArticleForm',
+                resize: false,
+                cancel: function () {
+                    console.log("-->取消了");
+                }
+            });
         });
 
         //预览文章
@@ -198,6 +210,7 @@
                 layer.msg('请选择想要发布的文章！', {icon: 2});
                 return false;
             }
+
             $.ajax({
                 type: 'POST',
                 url: '${ctx}/article/publishArticle',
@@ -218,16 +231,15 @@
 
         //删除文章
         $("#btnDeleteArticle").on('click', function () {
-            if (selectedArticleIds == null || selectedArticleIds.length == 0) {
+            if (!selectedArticleIds || selectedArticleIds.length < 1) {
                 layer.msg('请选择想要删除的文章！', {icon: 2});
                 return false;
             }
-            alert("您确定要删除选中的文章吗？");
+
             $.ajax({
-                type: 'POST',
                 url: '${ctx}/article/deleteArticle',
-                contentType: "application/x-www-form-urlencoded",
-                data: {"selectedArticleIds": selectedArticleIds},
+                type: 'POST',
+                data: {"articleIds": selectedArticleIds.join(",")},
                 success: function (data) {
                     console.log(data);
                     if (data && data.status === "SUCCESS") {

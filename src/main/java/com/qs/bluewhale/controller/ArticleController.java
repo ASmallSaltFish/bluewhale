@@ -1,27 +1,26 @@
 package com.qs.bluewhale.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.qs.bluewhale.controller.base.BaseController;
-import com.qs.bluewhale.entity.Article;
-import com.qs.bluewhale.entity.User;
-import com.qs.bluewhale.entity.enums.ArticlePersonalFlagEnum;
+import com.qs.bluewhale.entity.*;
 import com.qs.bluewhale.entity.enums.ArticleStatusEnum;
-import com.qs.bluewhale.service.ArticleService;
-import com.qs.bluewhale.service.UserService;
-import com.qs.bluewhale.utils.ExecutionContext;
-import com.qs.bluewhale.utils.JsonResult;
-import com.qs.bluewhale.utils.JsonStatus;
-import com.qs.bluewhale.utils.PageUtils;
+import com.qs.bluewhale.service.*;
+import com.qs.bluewhale.utils.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.imageio.stream.FileImageInputStream;
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -31,36 +30,69 @@ public class ArticleController extends BaseController {
 
     @Resource
     private ArticleService articleService;
-    @Autowired
+
+    @Resource
     private UserService userService;
+
+    @Resource
+    private TagInfoService tagInfoService;
+
+    @Resource
+    private CategoryInfoService categoryInfoService;
+
+    @Resource
+    private ArticleTagService articleTagService;
 
     @RequiresRoles("admin")
     @GetMapping(value = "/addArticle")
-    public String addArticle() {
+    public String addArticle(HttpServletRequest request) {
+        String articleId = request.getParameter("articleId");
+        Article article = articleService.findArticleById(articleId);
+        request.setAttribute("article", article);
         return "/articles/addArticle";
     }
 
     @PostMapping(value = "/saveArticle")
     @ResponseBody
-    public JsonResult saveArticle(Article article) {
+    public JsonResult saveArticle(Article article, HttpServletRequest request) {
         JsonResult jsonResult = new JsonResult();
         String title = article.getTitle();
-        String content = article.getContent();
-        String previewContent = article.getPreviewContent();
+        String description = article.getDescription();
         String author = ExecutionContext.getUserName();
-        if (StringUtils.isBlank(title) || StringUtils.isBlank(content)
-                || StringUtils.isBlank(previewContent) || StringUtils.isBlank(author)) {
+        if (StringUtils.isBlank(title) || StringUtils.isBlank(description)) {
             jsonResult.setMsg("参数校验错误！");
             return jsonResult;
+        }
+
+        String tagIdStr = request.getParameter("tagIdStr");
+        List<String> tagIds = null;
+        if (StringUtils.isNotBlank(tagIdStr)) {
+            tagIds = Arrays.asList(tagIdStr.split(","));
+        }
+
+        String articleId = IdWorker.getIdStr();
+        article.setArticleId(articleId);
+        List<ArticleTag> articleTagList = null;
+        if (CollectionUtils.isNotEmpty(tagIds)) {
+            articleTagList = new ArrayList<>(tagIds.size());
+            for (String tagId : tagIds) {
+                ArticleTag articleTag = new ArticleTag();
+                articleTag.setArticleId(articleId);
+                articleTag.setTagId(tagId);
+                articleTagList.add(articleTag);
+            }
         }
 
         article.setAuthor(author);
         //草稿状态
         article.setStatus(ArticleStatusEnum.DRAFTED.getCode());
-        //先默认为公开
-        article.setPersonalFlag(ArticlePersonalFlagEnum.PUBLIC.getCode());
+        //保存文章信息
         articleService.save(article);
+        //保存文章和标签关联信息
+        articleTagService.saveBatch(articleTagList);
+
         jsonResult.setStatus(JsonStatus.SUCCESS);
+        jsonResult.setData(article);
         return jsonResult;
     }
 
@@ -114,6 +146,7 @@ public class ArticleController extends BaseController {
 
     /**
      * 修改文章
+     *
      * @param article
      * @return
      */
@@ -121,24 +154,16 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public JsonResult updateArticle(Article article) {
         JsonResult jsonResult = new JsonResult();
-        Article article1 = articleService.findArticleById(article.getArticleId());
-        if (article1 == null) {
-            jsonResult.setMsg("该原文章不存在！");
-            return jsonResult;
-        }
-        String lasModifyId = ExecutionContext.getUserId();
-        if (StringUtils.isBlank(article.getTitle()) || StringUtils.isBlank(article.getContent())
-                || StringUtils.isBlank(article.getPreviewContent()) || StringUtils.isBlank(lasModifyId)) {
-            jsonResult.setMsg("参数校验错误！");
+        Article articleFromDB = articleService.findArticleById(article.getArticleId());
+        if (articleFromDB == null) {
+            jsonResult.setMsg("数据库中该文章不存在！");
             return jsonResult;
         }
 
-        article1.setTitle(article.getTitle());
-        article1.setContent(article.getContent());
-        article1.setPreviewContent(article.getPreviewContent());
-        article1.setLastModifyBy(lasModifyId);
-        article1.setLastModifyTime(new Timestamp(new Date().getTime()));
-        articleService.updateById(article1);
+        articleFromDB.setTitle(article.getTitle());
+        articleFromDB.setContent(article.getContent());
+        articleFromDB.setPreviewContent(article.getPreviewContent());
+        articleService.updateById(articleFromDB);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
     }
@@ -155,10 +180,11 @@ public class ArticleController extends BaseController {
             jsonResult.setMsg("参数校验错误！");
             return jsonResult;
         }
-        List<Article> articles=new ArrayList<>();
-        for(int i=0;i<articleIds.length;i++){
-            Article article=articleService.findArticleById(articleIds[i]);
-            if (ArticleStatusEnum.PUBLIAHED.getCode().equals(article.getStatus())){
+
+        List<Article> articles = new ArrayList<>();
+        for (int i = 0; i < articleIds.length; i++) {
+            Article article = articleService.findArticleById(articleIds[i]);
+            if (ArticleStatusEnum.PUBLIAHED.getCode().equals(article.getStatus())) {
                 jsonResult.setMsg("选中的文章包含已发布文章！");
                 return jsonResult;
             }
@@ -173,6 +199,7 @@ public class ArticleController extends BaseController {
 
     /**
      * 删除文章
+     *
      * @param request
      * @return
      */
@@ -180,19 +207,13 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public JsonResult deleteArticle(HttpServletRequest request) {
         JsonResult jsonResult = new JsonResult();
-        String[] articleIds=request.getParameterValues("selectedArticleIds[]");
-        if (articleIds==null||articleIds.length==0) {
-            jsonResult.setMsg("参数校验错误！");
+        String articleIdStr = request.getParameter("articleIds");
+        if (StringUtils.isBlank(articleIdStr)) {
+            jsonResult.setMsg("未选中任何需要删除的文章！");
             return jsonResult;
         }
-        List<Article> articles=new ArrayList<>();
-        for(int i=0;i<articleIds.length;i++){
-            Article article=articleService.findArticleById(articleIds[i]);
-            article.setStatus(ArticleStatusEnum.DELETED.getCode());
-            article.setLastModifyTime(new Timestamp(new Date().getTime()));
-            articles.add(article);
-        }
-        articleService.updateBatchById(articles);
+
+        articleService.deleteByArticleIds(Arrays.asList(articleIdStr.split(",")));
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
     }
@@ -207,8 +228,120 @@ public class ArticleController extends BaseController {
         }
 
         article = articleService.findArticleById(article.getArticleId());
+        //更新预览数
+        article.setViewCount(article.getViewCount() + 1);
+        articleService.update(article);
         model.addAttribute("article", article);
         return "/articles/displayArticle";
     }
 
+    @GetMapping(value = "/addArticleForm")
+    public String addArticleForm(Model model) {
+        String userId = ExecutionContext.getUserId();
+        //标签列表
+        List<TagInfo> tagInfoList = tagInfoService.getTagInfoList(userId);
+        model.addAttribute("tagList", tagInfoList);
+
+        //类别列表
+        List<CategoryInfo> categoryInfoList = categoryInfoService.getCategoryInfoList(userId);
+        model.addAttribute("categoryList", categoryInfoList);
+        return "/articles/addArticleForm";
+    }
+
+    @PostMapping(value = "/uploadImgFile")
+    @ResponseBody
+    public JsonResult uploadImgFile(HttpServletRequest request, String articleId) {
+        JsonResult jsonResult = new JsonResult();
+        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+        MultipartFile uploadImgFile = multipartHttpServletRequest.getFile("uploadImgFile");
+        if (uploadImgFile == null) {
+            jsonResult.setMsg("上传文件不存在哟~");
+            return jsonResult;
+        }
+
+        try {
+            String orgFileName = uploadImgFile.getOriginalFilename();
+            if (StringUtils.isBlank(orgFileName)) {
+                jsonResult.setMsg("上传文件不存在哟~");
+                return jsonResult;
+            }
+
+            String suffix = orgFileName.substring(orgFileName.lastIndexOf("."));
+            InputStream inputStream = uploadImgFile.getInputStream();
+            String uploadFilePath = ConfigConstants.getParam("upload.article.imgFilePath") + articleId + suffix;
+            File file = new File(uploadFilePath);
+            File parentDir = new File(file.getParent());
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            //将获取到的字节数据写入到指定的文件中
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buff = new byte[1024];
+            while (-1 != (inputStream.read(buff))) {
+                outputStream.write(buff, 0, buff.length);
+            }
+
+            //在文件比较小的情况下，可以直接写入获取到的字节
+            //outputSream.write(mulFile.getBytes());
+            outputStream.flush();
+            inputStream.close();
+            outputStream.close();
+
+            //更新文章记录
+            Article article = new Article();
+            article.setArticleId(articleId);
+            article.setImageCover(uploadFilePath);
+            articleService.update(article);
+        } catch (IOException e) {
+            logger.error("上传文件出现错误", e);
+            jsonResult.setMsg("未知错误！");
+        }
+
+        jsonResult.setMsg("上传文件成功!");
+        jsonResult.setStatus(JsonStatus.SUCCESS);
+        return jsonResult;
+    }
+
+
+    //展示图片
+    @PostMapping(value = "/showImageCover")
+    @ResponseBody
+    public JsonResult showImageCover(String imageFilePath) {
+        JsonResult jsonResult = new JsonResult();
+        if (StringUtils.isBlank(imageFilePath)) {
+            jsonResult.setMsg("图片不存在！");
+            return jsonResult;
+        }
+
+        File file = new File(imageFilePath);
+        FileImageInputStream inputStream = null;
+        try {
+            inputStream = new FileImageInputStream(file);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while (-1 != (len = inputStream.read(buffer))) {
+                outputStream.write(buffer, 0, len);
+            }
+
+            //使用字节输出流
+            String base64Str = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+            jsonResult.setData(base64Str);
+            jsonResult.setStatus(JsonStatus.SUCCESS);
+            return jsonResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
 }

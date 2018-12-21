@@ -19,4 +19,6 @@ public interface ArticleService extends IService<Article> {
     int countByUserId(String userId);
 
     void update(Article article);
+
+    void deleteByArticleIds(List<String> asList);
 }
