@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class CategoryInfoController extends BaseController {
     }
 
     /**
-     * 获取文章列表
+     * 获取类别列表
      */
     @RequestMapping(value = "/listCategoryPage")
     @ResponseBody
@@ -100,13 +100,11 @@ public class CategoryInfoController extends BaseController {
             jsonResult.setMsg("参数校验错误！");
             return jsonResult;
         }
-        List<String> categoryInfos=new ArrayList<>();
-        for(int i=0;i<categoryIds.length;i++){
+        List<String> categoryInfos= Arrays.asList(categoryIds);
+        /*for(int i=0;i<categoryIds.length;i++){
             String categoryId=categoryInfoService.findCategoryById(categoryIds[i]).getCategoryId();
-            /*categoryInfo.setStatus(ArticleStatusEnum.DELETED.getCode());
-            categoryInfo.setLastModifyTime(new Timestamp(new Date().getTime()));*/
             categoryInfos.add(categoryId);
-        }
+        }*/
         categoryInfoService.removeByIds(categoryInfos);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;

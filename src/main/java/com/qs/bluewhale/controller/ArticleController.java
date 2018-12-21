@@ -181,18 +181,18 @@ public class ArticleController extends BaseController {
             return jsonResult;
         }
 
-        List<Article> articles = new ArrayList<>();
-        for (int i = 0; i < articleIds.length; i++) {
-            Article article = articleService.findArticleById(articleIds[i]);
+        List<String> asList=Arrays.asList(articleIds); //将数组转换为List集合
+        List<Article> articleList= (List<Article>) articleService.listByIds(asList); //批量查找
+        for(Article article:articleList){
+            //Article article=articleService.findArticleById(articleIds[i]);
             if (ArticleStatusEnum.PUBLIAHED.getCode().equals(article.getStatus())) {
                 jsonResult.setMsg("选中的文章包含已发布文章！");
                 return jsonResult;
             }
             article.setStatus(ArticleStatusEnum.PUBLIAHED.getCode());
             article.setLastModifyTime(new Timestamp(new Date().getTime()));
-            articles.add(article);
         }
-        articleService.updateBatchById(articles);
+        articleService.updateBatchById(articleList);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
     }
