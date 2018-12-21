@@ -65,7 +65,7 @@ public class CategoryInfoController extends BaseController {
             jsonResult.setMsg("参数校验错误！");
             return jsonResult;
         }
-        categoryInfo.setLastModifyTime(new Timestamp(new Date().getTime()));
+        //categoryInfo.setLastModifyTime(new Timestamp(new Date().getTime()));
         categoryInfoService.saveOrUpdate(categoryInfo);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
@@ -84,6 +84,31 @@ public class CategoryInfoController extends BaseController {
         //model.addAttribute("refer", request.getParameter("refer"));
         model.addAttribute("categoryInfo", categoryInfo);
         return "/category/updateCategory";
+    }
+
+    /**
+     * 保存修改后的类别
+     */
+    @PostMapping(value = "saveUpdatedCategory")
+    @ResponseBody
+    public JsonResult saveUpdatedCategory(CategoryInfo categoryInfo){
+        JsonResult jsonResult=new JsonResult();
+        String categoryName=categoryInfo.getCategoryName();
+        if(StringUtils.isBlank(categoryName)){
+            jsonResult.setMsg("参数校验出错！");
+            return jsonResult;
+        }
+        categoryInfo=categoryInfoService.findCategoryById(categoryInfo.getCategoryId());
+        if (categoryInfo == null) {
+            jsonResult.setMsg("数据库中该类别不存在！");
+            return jsonResult;
+        }
+        categoryInfo.setCategoryName(categoryName);
+        categoryInfo.setLastModifyBy(ExecutionContext.getUserId());
+        categoryInfo.setLastModifyTime(new Timestamp(new Date().getTime()));
+        categoryInfoService.updateById(categoryInfo);
+        jsonResult.setStatus(JsonStatus.SUCCESS);
+        return jsonResult;
     }
 
     /**

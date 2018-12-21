@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>类别修改</title>
+    <title>标签修改</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
 </head>
 
@@ -14,13 +14,13 @@
         <div class="layui-col-md12">
             <form class="layui-form" id="articleForm">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">类别名称</label>
+                    <label class="layui-form-label">标签名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="categoryName" required lay-verify="required"
-                               value="${(categoryInfo.categoryName)!}"
+                        <input type="text" name="tagName" required lay-verify="required"
+                               value="${(tagInfo.tagName)!}"
                                autocomplete="off" class="layui-input">
-                        <input type="text" name="categoryId" style="display: none;"
-                               value="${(categoryInfo.categoryId)!}">
+                        <input type="text" name="tagId" style="display: none;"
+                               value="${(tagInfo.tagId)!}">
                     </div>
                     <div class="layui-input-inline">
                         <button class="layui-btn" type="button" id="btnSave">保存</button>
@@ -48,14 +48,14 @@
         //保存修改
         $("#btnSave").on('click', function () {
             var $articleForm = $("#articleForm");
-            var categoryName = $articleForm.find("input[name='categoryName']").val();
-            var categoryId = $articleForm.find("input[name='categoryId']").val();
+            var tagName = $articleForm.find("input[name='tagName']").val();
+            var tagId = $articleForm.find("input[name='tagId']").val();
             var param = {
-                'categoryId': categoryId,
-                'categoryName': categoryName
+                'tagId': tagId,
+                'tagName': tagName
             };
 
-            $.post('${ctx}/category/saveUpdatedCategory', param, function (data) {
+            $.post('${ctx}/tag/saveUpdatedTag', param, function (data) {
                 if (data && data.status === "SUCCESS") {
                     layer.msg('保存成功！', {icon: 1, time: 3000}, function () {
                         window.location.href = '${ctx}/admin/index';

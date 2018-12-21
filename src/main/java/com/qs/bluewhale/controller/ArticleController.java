@@ -163,6 +163,8 @@ public class ArticleController extends BaseController {
         articleFromDB.setTitle(article.getTitle());
         articleFromDB.setContent(article.getContent());
         articleFromDB.setPreviewContent(article.getPreviewContent());
+        articleFromDB.setLastModifyBy(ExecutionContext.getUserId());
+        articleFromDB.setLastModifyTime(new Timestamp(new Date().getTime()));
         articleService.updateById(articleFromDB);
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;

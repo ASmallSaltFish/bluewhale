@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>类别修改</title>
+    <title>添加标签</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/layui/css/layui.css">
+
 </head>
 
 <body>
@@ -14,13 +15,10 @@
         <div class="layui-col-md12">
             <form class="layui-form" id="articleForm">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">类别名称</label>
+                    <label class="layui-form-label">标签名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="categoryName" required lay-verify="required"
-                               value="${(categoryInfo.categoryName)!}"
+                        <input type="text" name="tagName" required lay-verify="required" placeholder="取个名字吧~"
                                autocomplete="off" class="layui-input">
-                        <input type="text" name="categoryId" style="display: none;"
-                               value="${(categoryInfo.categoryId)!}">
                     </div>
                     <div class="layui-input-inline">
                         <button class="layui-btn" type="button" id="btnSave">保存</button>
@@ -45,17 +43,16 @@
         var element = layui.element;
         var $ = layui.$;
 
-        //保存修改
+        //保存文章
         $("#btnSave").on('click', function () {
+            debugger
             var $articleForm = $("#articleForm");
-            var categoryName = $articleForm.find("input[name='categoryName']").val();
-            var categoryId = $articleForm.find("input[name='categoryId']").val();
+            var tagName = $articleForm.find("input[name='tagName']").val();
             var param = {
-                'categoryId': categoryId,
-                'categoryName': categoryName
+                'tagName': tagName
             };
 
-            $.post('${ctx}/category/saveUpdatedCategory', param, function (data) {
+            $.post('${ctx}/tag/saveTag', param, function (data) {
                 if (data && data.status === "SUCCESS") {
                     layer.msg('保存成功！', {icon: 1, time: 3000}, function () {
                         window.location.href = '${ctx}/admin/index';

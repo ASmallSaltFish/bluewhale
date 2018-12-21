@@ -12,4 +12,6 @@ public interface TagInfoService extends IService<TagInfo> {
     List<TagInfo> getTagInfoList(String userId);
 
     PageInfo<TagInfo> listArticlesPage(TagInfo tagInfo, Page<TagInfo> page);
+
+    TagInfo findTagInfoById(String tagId);
 }

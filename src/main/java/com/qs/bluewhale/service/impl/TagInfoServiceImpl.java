@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.qs.bluewhale.entity.Article;
 import com.qs.bluewhale.entity.TagInfo;
 import com.qs.bluewhale.mapper.TagInfoMapper;
 import com.qs.bluewhale.service.TagInfoService;
@@ -40,5 +39,12 @@ public class TagInfoServiceImpl extends ServiceImpl<TagInfoMapper, TagInfo> impl
 
         queryWrapper.eq("create_by", ExecutionContext.getUserId());
         return new PageInfo<>(list(queryWrapper));
+    }
+
+    @Override
+    public TagInfo findTagInfoById(String tagId) {
+        QueryWrapper<TagInfo> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("tag_id",tagId);
+        return getOne(queryWrapper);
     }
 }

@@ -77,7 +77,7 @@
 
         //存储选中行的userId
         var selectedTagIds = [];
-        table.on('checkbox(article)', function (obj) {
+        table.on('checkbox(tagInfo)', function (obj) {
             if (obj.checked === true) {
                 if (obj.type === 'one') {
                     selectedTagIds.push(obj.data.tagId);
@@ -90,7 +90,7 @@
                 if (obj.type === 'one') {
                     for (var i = 0; i < selectedTagIds.length; i++) {
                         if (selectedTagIds[i] === obj.data.tagId) {
-                            selectedTagIds.remove(i);
+                            selectedTagIds.remove(selectedTagIds[i]);
                         }
                     }
                 } else {
@@ -103,7 +103,89 @@
         });
 
         //新增标签
+        $("#btnAddTag").on('click',function () {
+            var $btn=$("#btnAddTag");
+            $.ajax({
+                url:'${ctx}/tag/addTag',
+                type:'GET',
+                async: true,
+                success:function (data) {
+                    var tabName="标签-"+$btn.val();
+                    var tabId = $btn.attr("id");
+                    var $tabli = $("li[lay-id='" + tabId + "']");
+                    //如果已经存在
+                    if ($tabli.length === 0) {
+                        //新增一个Tab项
+                        element.tabAdd('mainTb', {
+                            title: tabName,
+                            content: data,
+                            id: tabId
+                        });
+                    }
+                    $("li[lay-id='" + tabId + "']").click();
+                }
+            });
+        });
 
+        //修改标签
+        $("#btnUpdateTag").on('click',function () {
+            if (selectedTagIds.length == 0) {
+                layer.msg('请选择想要修改的标签！', {icon: 2});
+                return false;
+            }
+            if (selectedTagIds.length != 1) {
+                layer.msg('修改时只能选择一条记录！', {icon: 2});
+                return false;
+            }
+
+            var $btn = $("#btnUpdateTag");
+            $.ajax({
+                url: '${ctx}/tag/updateTag?tagId=' + selectedTagIds[0],
+                type: 'GET',
+                async: true,
+                success: function (data) {
+                    var tabName = "标签-" + $btn.val();
+                    var tabId = $btn.attr("id");
+                    var $tabli = $("li[lay-id='" + tabId + "']");
+                    //如果已经存在
+                    if ($tabli.length === 0) {
+                        //新增一个Tab项
+                        element.tabAdd('mainTb', {
+                            title: tabName,
+                            content: data,
+                            id: tabId
+                        });
+                    }
+
+                    $("li[lay-id='" + tabId + "']").click();
+                }
+            });
+        });
+
+        //删除标签
+        $("#btnDeleteTag").on('click',function () {
+            if (selectedTagIds.length == 0) {
+                layer.msg('请选择想要删除的标签！', {icon: 2});
+                return false;
+            }
+            alert("您确定要删除选中的标签吗？");
+            $.ajax({
+                type:'POST',
+                url:'${ctx}/tag/deleteTag',
+                contentType: "application/x-www-form-urlencoded",
+                data: {"selectedTagIds":selectedTagIds},
+                success : function(data) {
+                    console.log(data);
+                    if (data && data.status === "SUCCESS") {
+                        layer.msg('删除成功！', {icon: 1, time: 3000}, function () {
+                            window.location.href = '${ctx}/admin/index';
+                        });
+                    } else {
+                        layer.msg(data.msg || '删除出现错误！', {icon: 2, time: 3000});
+                    }
+                }
+            });
+        });
 
         //数组添加remove方法
         Array.prototype.remove = function (val) {
