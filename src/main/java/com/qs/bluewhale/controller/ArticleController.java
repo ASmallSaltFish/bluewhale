@@ -73,7 +73,7 @@ public class ArticleController extends BaseController {
         String articleId = IdWorker.getIdStr();
         article.setArticleId(articleId);
         List<ArticleTag> articleTagList = null;
-        if (CollectionUtils.isNotEmpty(tagIds)) {
+        if (CollectionUtils.isNotEmpty(tagIds)&&tagIds.size()!=0) {
             articleTagList = new ArrayList<>(tagIds.size());
             for (String tagId : tagIds) {
                 ArticleTag articleTag = new ArticleTag();
@@ -81,6 +81,8 @@ public class ArticleController extends BaseController {
                 articleTag.setTagId(tagId);
                 articleTagList.add(articleTag);
             }
+            //保存文章和标签关联信息
+            articleTagService.saveBatch(articleTagList);
         }
 
         article.setAuthor(author);
@@ -88,8 +90,6 @@ public class ArticleController extends BaseController {
         article.setStatus(ArticleStatusEnum.DRAFTED.getCode());
         //保存文章信息
         articleService.save(article);
-        //保存文章和标签关联信息
-        articleTagService.saveBatch(articleTagList);
 
         jsonResult.setStatus(JsonStatus.SUCCESS);
         jsonResult.setData(article);

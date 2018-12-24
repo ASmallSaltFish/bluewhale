@@ -57,7 +57,7 @@
         select * from t_bw_article a
         <where>
             1=1
-            <if test="article.status!=null">
+            <if test="article.status!=null and article.status!=''">
                 and a.status=#{article.status}
             </if>
 
@@ -69,7 +69,7 @@
                 )
             </if>
 
-            <if test="article.personalFlag!=null">
+            <if test="article.personalFlag!=null and article.personalFlag!=''">
                 and a.personal_flag=#{article.personalFlag}
             </if>
 
