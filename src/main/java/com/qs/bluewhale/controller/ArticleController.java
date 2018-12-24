@@ -196,7 +196,7 @@ public class ArticleController extends BaseController {
                 return jsonResult;
             }
             article.setStatus(ArticleStatusEnum.PUBLIAHED.getCode());
-            article.setLastModifyTime(new Timestamp(new Date().getTime()));
+            article.setPublishDate(new Timestamp(new Date().getTime()));
         }
         articleService.updateBatchById(articleList);
         jsonResult.setStatus(JsonStatus.SUCCESS);

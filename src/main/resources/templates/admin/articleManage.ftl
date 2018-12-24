@@ -16,14 +16,20 @@
 
     发布时间：
     <div class="layui-form layui-inline" style="margin-right: 10px;">
-        <div class="layui-inline">
-            <input type="text" name="article.publishStartDate" id="publishStartDate" class="layui-input"
-                   id="publishStartDate">
+    <#--<div class="layui-inline">
+        <input type="text" name="article.publishStartDate" id="publishStartDate" class="layui-input"
+               id="publishStartDate">
+    </div>-->
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="publishStartDate" placeholder="yyyy-MM-dd">
         </div>
         -
-        <div class="layui-inline">
+        <#--<div class="layui-inline">
             <input type="text" name="article.publishEndDate" id="publishEndDate" class="layui-input" id="publishEndDate"
                    value="${.now?string('yyyy-MM-dd')}">
+        </div>-->
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="publishEndDate" placeholder="yyyy-MM-dd">
         </div>
     </div>
 
@@ -34,7 +40,7 @@
     <div class="layui-row" style="margin-top: 20px;">
         <input type="button" class="layui-btn layui-btn-sm" id="btnAddArticle" value="新增"/>
         <input type="button" class="layui-btn layui-btn-sm" id="btnPreviewArticle" value="预览/修改"/>
-        <#--<button class="layui-btn layui-btn-sm" id="btnUpdateArticle">修改</button>-->
+    <#--<button class="layui-btn layui-btn-sm" id="btnUpdateArticle">修改</button>-->
         <input type="button" class="layui-btn layui-btn-sm" id="btnPublishArticle" value="发布"/>
         <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDeleteArticle" value="删除"/>
     </div>
@@ -54,14 +60,23 @@
     //加载弹出层组件
     layui.config({
         dir: '${ctx}/static/layui/'
-    }).use(['layer', 'form', 'element', 'table', 'upload'], function () {
+    }).use(['layer', 'form', 'element', 'table', 'upload','laydate'], function () {
         var layer = layui.layer;
         var form = layui.form;
         var element = layui.element;
         var table = layui.table;
+        var laydate = layui.laydate;
         var $ = layui.$;
 
         var table_data = [];
+
+        laydate.render({
+            elem: '#publishStartDate'
+        });
+        laydate.render({
+            elem: '#publishEndDate',
+        });
+
         //第一个实例
         table.render({
             elem: '#allArticleListTb',
@@ -153,7 +168,7 @@
 
         //新增文章
         $("#btnAddArticle").on('click', function () {
-            <#--window.open("${ctx}/article/addArticle");-->
+        <#--window.open("${ctx}/article/addArticle");-->
             //新增人员
             layer.open({
                 title: '新增文章',
