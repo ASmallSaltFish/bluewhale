@@ -85,20 +85,53 @@
     </select>
 
 
+    <!--&lt;!&ndash; 首页文章分页 &ndash;&gt;-->
+    <!--<select id="listArticles" resultMap="BaseResultMap">-->
+        <!--select * from t_bw_article a-->
+        <!--left join t_bw_article_tag art on art.article_id=a.article_id-->
+        <!--left join t_bw_tag tag on tag.tag_id=art.tag_id-->
+        <!--<where>-->
+            <!--status='1'-->
+            <!--<if test="article.tagIds!=null">-->
+                <!--and tag.tag_id in-->
+                <!--<foreach collection="article.tagIds" item="tagId" open="(" separator="," close=")">-->
+                    <!--#{tagId}-->
+                <!--</foreach>-->
+            <!--</if>-->
+
+            <!--<if test="article.categoryIds!=null">-->
+                <!--and a.category id in-->
+                <!--<foreach collection="article.categoryIds" item="categoryId" open="(" separator="," close=")">-->
+                    <!--#{categoryId}-->
+                <!--</foreach>-->
+            <!--</if>-->
+        <!--</where>-->
+        <!--order by-->
+        <!--<if test="article.orderBy!=null and article.orderBy=='viewCount'">-->
+            <!--a.view_count desc,-->
+        <!--</if>-->
+        <!--<if test="article.orderBy!=null and article.orderBy=='createTime'">-->
+            <!--a.create_time desc,-->
+        <!--</if>-->
+        <!--a.last_modify_time desc,a.create_time desc-->
+    <!--</select>-->
+
+
     <!-- 首页文章分页 -->
     <select id="listArticles" resultMap="BaseResultMap">
         select * from t_bw_article a
-        left join t_bw_article_tag art on art.article_id=a.article_id
-        left join t_bw_tag tag on tag.tag_id=art.tag_id
         <where>
-            status='1'
+            a.status='1'
             <if test="article.tagIds!=null">
-                and tag.tag_id in
+                and a.article_id in (
+                select art.article_id from t_bw_article_tag art
+                inner join t_bw_tag tg on tg.tag_id=art.tag_id
+                where tg.tag_id in
                 <foreach collection="article.tagIds" item="tagId" open="(" separator="," close=")">
                     #{tagId}
                 </foreach>
+                )
             </if>
-
             <if test="article.categoryIds!=null">
                 and a.category id in
                 <foreach collection="article.categoryIds" item="categoryId" open="(" separator="," close=")">

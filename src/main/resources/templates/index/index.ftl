@@ -203,7 +203,12 @@
                 type: 'POST',
                 dataType: 'JSON',
                 beforeSend: function () {
-
+                    var loadingDiv = '<div style="min-height: 600px; text-align: center;">\n' +
+                        '                        <i class="layui-icon layui-icon-loading" style="color: orange;">\n' +
+                        '                            正在加载数据，请稍等哟~\n' +
+                        '                        </i>\n' +
+                        '                    </div>';
+                    $("#articleDiv").html(loadingDiv);
                 },
                 success: function (data) {
                     var articles = data.data;
@@ -279,7 +284,7 @@
             <#--console.log(data);-->
             <#--if (data.data) {-->
             <#--imageSrc += data.data;-->
-            <#--}else{-->
+            <#--} else {-->
             <#--imageSrc = "${ctx}/static/images/bg-01.jpg";-->
             <#--}-->
             <#--}-->
