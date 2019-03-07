@@ -6,7 +6,7 @@ public class ConfigConstants {
 
     private static String CONSTANTS_FILE = "config";
 
-    //读取classpath下面"config.xml"属性文件（jdk rt.jar中提供）
+    //读取classpath下面"config.properties"属性文件（jdk rt.jar中提供）
     private static ResourceBundle BUNDLE = ResourceBundle.getBundle(CONSTANTS_FILE);
 
     /**

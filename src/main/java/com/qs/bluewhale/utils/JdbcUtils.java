@@ -1,7 +1,5 @@
 package com.qs.bluewhale.utils;
 
-import sun.security.krb5.Config;
-
 import java.sql.*;
 
 public class JdbcUtils {
